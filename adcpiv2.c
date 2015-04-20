@@ -4,7 +4,7 @@ read abelectronics ADC Pi V2 board inputs with repeating reading from each chann
 Based on ADC 1 demo code by Stephan Callsen from https://github.com/abelectronicsuk/adcpi/blob/master/adcon.c
 
 Author:	Brian Dorey
-Version:	1.0 
+Version:	1.0
 Date: 15 August 2013
 Version History:
 1.0 - Initial Release
@@ -12,11 +12,11 @@ Version History:
 	Required package:
 	apt-get install libi2c-dev
 
-	Compile with gcc: 
-	gcc adc.c -o adc
+	Compile with gcc:
+	gcc adcpiv2.c -o adc
 
 	Execute with:
-	./adc [channel] 
+	./adc [channel]
 	default is channel 1
 
 */
@@ -45,7 +45,7 @@ const float varDivisior = 64; // from pdf sheet on adc addresses and config for 
 static float varMultiplier = 0;
 
 
-float getadc (int chn);  
+float getadc (int chn);
 
 
 int main(int argc, char **argv) {
@@ -61,11 +61,11 @@ int main(int argc, char **argv) {
   for (i=0;i<500;i++){
     val = getadc (channel);
 	if (val <= 5.5) {
-		printf ("Channel: %d  - %2.4fV\n",channel,val);  
+		printf ("Channel: %d  - %2.4fV\n",channel,val);
 	}
     sleep (0.5);
   }
-  return 0; 
+  return 0;
 }
 
 float getadc (int chn){
@@ -106,7 +106,7 @@ float getadc (int chn){
 
   // check if positive or negative number and invert if needed
   if (res[0]>=128) dummy = ~(0x020000 - dummy);
- 
+
   val = dummy * varMultiplier;
   return val;
 }
