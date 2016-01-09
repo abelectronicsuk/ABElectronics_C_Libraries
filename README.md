@@ -8,10 +8,10 @@ To download to your Raspberry Pi type in terminal:
 ```
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
 ```
-###adcpiv2.c
-This demo reads input values from the ADC Pi v2 from  http://www.abelectronics.co.uk/products/3/Raspberry-Pi/17/ADC-Pi-V2---Raspberry-Pi-Analogue-to-Digital-converter
+###ADC Pi
+This library reads input values from the [ADC Pi](https://www.abelectronics.co.uk/p/17/ADC-Pi-V2---Raspberry-Pi-Analogue-to-Digital-converter "ADC Pi") and [ADC Pi Plus ](https://www.abelectronics.co.uk/p/56/ADC-Pi-Plus---Raspberry-Pi-Analogue-to-Digital-converter "ADC Pi Plus").
 
-###iopimatrix.c
-This demo writes to an led matrix driven by an IO Pi from http://www.abelectronics.co.uk/products/3/Raspberry-Pi/18/IO-Pi-32-Channel-Port-Expander-for-the-Raspberry-Pi
+###IO Pi
+This library reads and writes to the [IO Pi](https://www.abelectronics.co.uk/p/18/IO-Pi "IO Pi") and [IO Pi Plus](https://www.abelectronics.co.uk/p/54/IO-Pi-Plus "IO Pi Plus").
 
 We will be adding further C demos in the future for our boards.
