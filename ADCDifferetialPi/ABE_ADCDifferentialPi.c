@@ -1,10 +1,10 @@
 /*
  ================================================
- ABElectronics UK ADC Pi 8-Channel Analogue to Digital Converter
- Version 1.1 Created 23/01/2015 - Updated 27/05/2015
+ ABElectronics UK ADC Differential Pi 8-Channel Analogue to Digital Converter
+ Version 1.0 Created 11/01/2016
  ================================================
 
- Reads from the MCP3424 ADC on the ADC Pi and ADC Pi Plus.
+ Reads from the MCP3424 ADC on the ADC Differential Pi and Delta-Sigma Pi.
 
  Two functions are available to use.
 
@@ -34,6 +34,7 @@ const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a 
 unsigned char writebuffer[10] = { 0 };
 unsigned char readbuffer[10] = { 0 };
 static char signbit = 0;
+
 // local methods
 
 static void read_byte_array(char address, char reg, char length) {
@@ -57,11 +58,6 @@ static void read_byte_array(char address, char reg, char length) {
 	}
 
 	read(i2cbus, readbuffer, 4);
-
-	//if (read(i2cbus, readbuffer, 4) != 1) { // Read back data into buf[]
-	//	printf("Failed to read from slave\n");
-	//	exit(1);
-	//}
 
 	close(i2cbus);
 }
@@ -283,6 +279,7 @@ double read_voltage(char address, char channel, int bitrate, int pga,
 
 	// calculate the gain based on the pga value
 	double gain = (double) pga / 2;
+	double offset = 2.048 / (double) pga;
 
 	// set the lsb value based on the bitrate
 	double lsb = 0;
@@ -305,9 +302,10 @@ double read_voltage(char address, char channel, int bitrate, int pga,
 		break;
 	}
 
-	if (signbit == 1) // if the signbit is 1 the value is negative and most likely noise so it can be ignored.
+	if (signbit == 1) // if the signbit is 1 convert it back to positive and subtract 2.048.
 			{
-		return (0);
+		double voltage = (double) raw * (lsb / gain) - offset; // calculate the voltage and return it
+		return (voltage);
 	} else {
 		double voltage = (double) raw * (lsb / gain); // calculate the voltage and return it
 		return (voltage);
