@@ -9,6 +9,9 @@ To download to your Raspberry Pi type in terminal:
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
 ```
 
+###ADCDAC Pi
+This library reads ADC inputs and writes to DAC outputs on the [ADCDAC Pi](https://www.abelectronics.co.uk/p/39/ADC-DAC-Pi-Raspberry-Pi-ADC-and-DAC-expansion-board "ADCDAC Pi").
+
 ###ADC Differential Pi
 This library reads input values from the [ADC Differential Pi](https://www.abelectronics.co.uk/p/65/ADC-Differential-Pi-Raspberry-Pi-Analogue-to-Digital-converter "ADC Differential Pi") and [Delta Sigma Pi](https://www.abelectronics.co.uk/p/14/Delta-Sigma-Pi "Delta Sigma Pi").
 
