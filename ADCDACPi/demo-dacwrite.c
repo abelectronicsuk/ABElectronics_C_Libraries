@@ -3,7 +3,7 @@
  *
  *  Created on: 20 Jan 2016
  *
- *      compile with "gcc ABE_ADCDACPi.c demo-adcread.c -o demo-dacwrite"
+ *      compile with "gcc ABE_ADCDACPi.c demo-dacwrite.c -o demo-dacwrite"
  *      run with "./demo-dacwrite"
  */
 
