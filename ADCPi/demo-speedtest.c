@@ -40,8 +40,10 @@ int main(int argc, char **argv){
 	gettimeofday(&t1, NULL);
 
 	int x;
+	int channel = 1;
 	for (x = 0; x <= numberofsamples; x++){
 		samplearray[x] = read_voltage(0x68,1, 12, 1, 1); // read from adc chip 1, channel 1, 12 bit, pga gain set to 1 and continuous conversion mode
+
 	}
 
 	// stop timer
@@ -59,7 +61,10 @@ int main(int argc, char **argv){
 	    elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
 	    elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
 
-	    printf("%d samples in %G ms.\nAverage value was %Gv",numberofsamples,elapsedTime,average);
+	    // compute the sample rate
+	    double samplerate = (numberofsamples / elapsedTime) * 1000;
+
+	    printf("%d samples in %G ms.\nThe sample rate was %G samples per second\nThe average voltage was %Gv",numberofsamples,elapsedTime,samplerate,average);
 
 
 	return (0);
