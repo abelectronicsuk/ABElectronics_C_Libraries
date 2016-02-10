@@ -309,7 +309,7 @@ double read_voltage(char address, char channel, int bitrate, int pga,
 			{
 		return (0);
 	} else {
-		double voltage = (double) raw * (lsb / gain); // calculate the voltage and return it
+		double voltage = ((double)raw * (lsb / gain)) * 2.471; // calculate the voltage and return it
 		return (voltage);
 	}
 }
