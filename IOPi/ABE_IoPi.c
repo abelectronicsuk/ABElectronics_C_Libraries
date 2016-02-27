@@ -1,7 +1,7 @@
 /*
  ================================================
  ABElectronics UK IO Pi 32-Channel Port Expander
- Version 1.0 Created 23/01/2015
+ Version 1.1 Created 23/01/2015 - Updated 27/05/2015
  ================================================
 
 
@@ -81,16 +81,6 @@ static char OLATA = 0x14; // output latches A
 static char OLATB = 0x15; // output latches B
 
 	// variables
-static char portaval = 0x00;
-static char portbval = 0x00;
-static char port_a_dir = 0x00; // port a direction
-static char port_b_dir = 0x00; // port b direction
-static char porta_pullup = 0x00; // port a pull-up resistors
-static char portb_pullup = 0x00; // port a pull-up resistors
-static char porta_polarity = 0x00; // input polarity for port a
-static char portb_polarity = 0x00; // input polarity for port b
-static char intA = 0x00; // interrupt control for port a
-static char intB = 0x00; // interrupt control for port a
 	// initial configuration - see IOCON page in the MCP23017 datasheet for
 	// more information.
 static char config = 0x22;
@@ -133,12 +123,15 @@ void set_pin_direction(char address, char pin, char direction) {
 	 direction 1 = input, 0 = output
 	 */
 	pin = pin - 1;
+	char cval = 0;
 	if (pin < 8) {
-		port_a_dir = updatebyte(port_a_dir, pin, direction);
-		write_byte_data(address, IODIRA, port_a_dir);
+		cval = read_byte_data(address, IODIRA);
+		cval = updatebyte(cval, pin, direction);
+		write_byte_data(address, IODIRA, cval);
 	} else {
-		port_b_dir = updatebyte(port_b_dir, pin - 8, direction);
-		write_byte_data(address, IODIRB, port_b_dir);
+		cval = read_byte_data(address, IODIRB);
+		cval = updatebyte(cval, pin - 8, direction);
+		write_byte_data(address, IODIRB, cval);
 	}
 }
 
@@ -150,10 +143,8 @@ void set_port_direction(char address, char port, char direction) {
 	 */
 	if (port == 1) {
 		write_byte_data(address, IODIRB, direction);
-		port_b_dir = direction;
 	} else {
 		write_byte_data(address, IODIRA, direction);
-		port_a_dir = direction;
 	}
 
 }
@@ -165,12 +156,15 @@ void set_pin_pullup(char address, char pinval, char value) {
 	 value 1 = enabled, 0 = disabled
 	 */
 	pinval = pinval - 1;
+	char cval = 0;
 	if (pinval < 8) {
-		porta_pullup = updatebyte(porta_pullup, pinval, value);
-		write_byte_data(address, GPPUA, porta_pullup);
+		cval = read_byte_data(address, GPPUA);
+		cval = updatebyte(cval, pinval, value);
+		write_byte_data(address, GPPUA, cval);
 	} else {
-		portb_pullup = updatebyte(portb_pullup, pinval - 8, value);
-		write_byte_data(address, GPPUB, portb_pullup);
+		cval = read_byte_data(address, GPPUB);
+		cval = updatebyte(cval, pinval - 8, value);
+		write_byte_data(address, GPPUB, cval);
 	}
 }
 
@@ -179,10 +173,8 @@ void set_port_pullups(char address, char port, char value) {
 	 set the internal 100K pull-up resistors for the selected IO port
 	 */
 	if (port == 1) {
-		portb_pullup = value;
 		write_byte_data(address, GPPUB, value);
 	} else {
-		porta_pullup = value;
 		write_byte_data(address, GPPUA, value);
 	}
 }
@@ -192,13 +184,15 @@ void write_pin(char address, char pin, char value) {
 	 write to an individual pin 1 - 16
 	 */
 	pin = pin - 1;
-
+	char cval = 0;
 	if (pin < 8) {
-		portaval = updatebyte(portaval, pin, value);
-		write_byte_data(address, GPIOA, portaval);
+		cval = read_byte_data(address, GPIOA);
+		cval = updatebyte(cval, pin, value);
+		write_byte_data(address, GPIOA, cval);
 	} else {
-		portbval = updatebyte(portbval, pin - 8, value);
-		write_byte_data(address, GPIOB, portbval);
+		cval = read_byte_data(address, GPIOB);
+		cval = updatebyte(cval, pin - 8, value);
+		write_byte_data(address, GPIOB, cval);
 	}
 }
 
@@ -210,10 +204,8 @@ void write_port(char address, char port, char value) {
 	 */
 	if (port == 1) {
 		write_byte_data(address, GPIOB, value);
-		portbval = value;
 	} else {
 		write_byte_data(address, GPIOA, value);
-		portaval = value;
 	}
 }
 
@@ -224,12 +216,10 @@ int read_pin(char address, char pinval) {
 	 */
 	pinval = pinval - 1;
 	if (pinval < 8) {
-		portaval = read_byte_data(address, GPIOA);
-		return (checkbit(portaval, pinval));
+		return (checkbit(read_byte_data(address, GPIOA), pinval));
 	} else {
 		pinval = pinval - 8;
-		portbval = read_byte_data(address, GPIOB);
-		return (checkbit(portbval, pinval));
+		return (checkbit(read_byte_data(address, GPIOB), pinval));
 	}
 }
 
@@ -240,11 +230,9 @@ char read_port(char address, char port) {
 	 returns number between 0 and 255 or 0x00 and 0xFF
 	 */
 	if (port == 1) {
-		portbval = read_byte_data(address, GPIOB);
-		return (portbval);
+		return (read_byte_data(address, GPIOB));
 	} else {
-		portaval = read_byte_data(address, GPIOA);
-		return (portaval);
+		return (read_byte_data(address, GPIOA));
 	}
 }
 
@@ -257,10 +245,8 @@ void invert_port(char address, char port, char polarity) {
 	 */
 	if (port == 1) {
 		write_byte_data(address, IPOLB, polarity);
-		portb_polarity = polarity;
 	} else {
 		write_byte_data(address, IPOLA, polarity);
-		porta_polarity = polarity;
 	}
 }
 
@@ -272,12 +258,15 @@ void invert_pin(char address, char pin, char polarity) {
 	 state of the input pin
 	 */
 	pin = pin - 1;
+	char cval = 0;
 	if (pin < 8) {
-		porta_polarity = updatebyte(portaval, pin, polarity);
-		write_byte_data(address, IPOLA, porta_polarity);
+		cval = read_byte_data(address, IPOLA);
+		cval = updatebyte(cval, pin, polarity);
+		write_byte_data(address, IPOLA, cval);
 	} else {
-		portb_polarity = updatebyte(portbval, pin - 8, polarity);
-		write_byte_data(address, IPOLB, portb_polarity);
+		cval = read_byte_data(address, IPOLB);
+		cval = updatebyte(cval, pin - 8, polarity);
+		write_byte_data(address, IPOLB, cval);
 	}
 }
 
@@ -345,10 +334,8 @@ void set_interrupt_on_port(char address, char port, char value) {
 	 */
 	if (port == 0) {
 		write_byte_data(address, GPINTENA, value);
-		intA = value;
 	} else {
 		write_byte_data(address, GPINTENB, value);
-		intB = value;
 	}
 }
 
@@ -359,12 +346,15 @@ void set_interrupt_on_pin(char address, char pin, char value) {
 	 Value 0 = interrupt disabled, 1 = interrupt enabled
 	 */
 	pin = pin - 1;
+	char cval = 0;
 	if (pin < 8) {
-		intA = updatebyte(intA, pin, value);
-		write_byte_data(address, GPINTENA, intA);
+		cval = read_byte_data(address, GPINTENA);
+		cval = updatebyte(cval, pin, value);
+		write_byte_data(address, GPINTENA, cval);
 	} else {
-		intB = updatebyte(intB, pin - 8, value);
-		write_byte_data(address, GPINTENB, intB);
+		cval = read_byte_data(address, GPINTENB);
+		cval = updatebyte(cval, pin - 8, value);
+		write_byte_data(address, GPINTENB, cval);
 	}
 }
 
@@ -403,8 +393,6 @@ void reset_interrupts(char address) {
 
 void IOPi_init(char address) {
 	write_byte_data(address, IOCON, config);
-	portaval = read_byte_data(address, GPIOA);
-	portbval = read_byte_data(address, GPIOB);
 	write_byte_data(address, IODIRA, 0xFF);
 	write_byte_data(address, IODIRB, 0xFF);
 	set_port_pullups(address, 0, 0x00);
