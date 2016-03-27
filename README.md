@@ -22,4 +22,7 @@ This library reads input values from the [ADC Pi](https://www.abelectronics.co.u
 ###IO Pi
 This library reads and writes to the [IO Pi](https://www.abelectronics.co.uk/p/18/IO-Pi "IO Pi") and [IO Pi Plus](https://www.abelectronics.co.uk/p/54/IO-Pi-Plus "IO Pi Plus").
 
+###Servo Pi
+This library controls the pwm outputs on the [Servo PWM Pi](https://www.abelectronics.co.uk/p/44/Servo-PWM-Pi "Servo PWM Pi") and [Servo PWM Pi Zero](https://www.abelectronics.co.uk/p/72/Servo-PWM-Pi-Zero "Servo PWM Pi Zero")
+
 We will be adding further C demos in the future for our boards.
