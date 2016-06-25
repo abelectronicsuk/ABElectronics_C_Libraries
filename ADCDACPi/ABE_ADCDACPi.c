@@ -84,26 +84,45 @@ void close_dac() {
 	close(dac);
 }
 
-double read_adc_voltage(int channel) {
+double read_adc_voltage(int channel, int mode) {
 	/*
 	 Read the voltage from the ADC
-	 Channel = 1 or 2
+	 Channel: 1 or 2
+	 Mode: 0 = Single Ended or 1 = Differential
+	 When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	 When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
+
 	 Returns voltage between 0 and 3.3V
 	 */
-	int rawval = read_adc_raw(channel);
+	int rawval = read_adc_raw(channel, mode);
 	return ((adcrefvoltage / 4096) * (double) rawval);
 }
 
-int read_adc_raw(int channel) {
+int read_adc_raw(int channel, int mode) {
 	/*
 	 Read the raw value from the ADC
-	 Channel = 1 or 2
+	 Channel: 1 or 2
+	 Mode: 0 = Single Ended or 1 = Differential
+	 When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	 When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
 	 Returns 12 bit value between 0 and 4096
 	 */
 	if (channel == 1) {
-		adctx[1] = 0x80;
+		if (mode == 0) {
+			adctx[1] = 0x80;
+		} else if (mode == 1) {
+			adctx[1] = 0xA0;
+		} else {
+			return (0);
+		}
 	} else if (channel == 2) {
-		adctx[1] = 0xC0;
+		if (mode == 0) {
+			adctx[1] = 0xC0;
+		} else if (mode == 1) {
+			adctx[1] = 0xE0;
+		} else {
+			return (0);
+		}
 	} else {
 		return (0);
 	}
