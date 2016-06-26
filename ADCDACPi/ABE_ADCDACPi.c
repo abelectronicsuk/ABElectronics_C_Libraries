@@ -111,7 +111,7 @@ int read_adc_raw(int channel, int mode) {
 		if (mode == 0) {
 			adctx[1] = 0x80;
 		} else if (mode == 1) {
-			adctx[1] = 0xA0;
+			adctx[1] = 0x00;
 		} else {
 			return (0);
 		}
@@ -119,7 +119,7 @@ int read_adc_raw(int channel, int mode) {
 		if (mode == 0) {
 			adctx[1] = 0xC0;
 		} else if (mode == 1) {
-			adctx[1] = 0xE0;
+			adctx[1] = 0x40;
 		} else {
 			return (0);
 		}

@@ -21,9 +21,9 @@ int open_dac();
 
 void close_dac();
 
-double read_adc_voltage(int channel);
+double read_adc_voltage(int channel, int mode);
 
-double read_adc_raw(int channel);
+double read_adc_raw(int channel, int mode);
 
 void set_adc_refvoltage(double ref);
 

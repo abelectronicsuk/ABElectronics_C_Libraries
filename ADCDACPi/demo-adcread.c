@@ -40,7 +40,7 @@ int main(int argc, char **argv){
 		printf("Pin 1: %G \n", read_adc_voltage(1, 0)); // read the voltage from channel 1 in single ended mode
 		printf("Pin 2: %G \n", read_adc_voltage(2, 0)); // read the voltage from channel 2 in single ended mode
 
-		usleep(20000); // sleep 0.2 seconds
+		usleep(200000); // sleep 0.2 seconds
 
 	}
 
