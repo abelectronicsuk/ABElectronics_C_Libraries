@@ -36,13 +36,18 @@ unsigned char readbuffer[10] = { 0 };
 static char signbit = 0;
 // local methods
 
-static void read_byte_array(char address, char reg, char length) {
-
+static void open_i2c_bus() {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for read %s \n", strerror(errno));
-
 		exit(1);
 	}
+}
+
+static void close_i2c_bus() {
+	close(i2cbus);
+}
+
+static void read_byte_array(char address, char reg, char length) {	
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
 		printf("Failed to write to i2c port for read\n");
@@ -56,14 +61,7 @@ static void read_byte_array(char address, char reg, char length) {
 		exit(1);
 	}
 
-	read(i2cbus, readbuffer, 4);
-
-	//if (read(i2cbus, readbuffer, 4) != 1) { // Read back data into buf[]
-	//	printf("Failed to read from slave\n");
-	//	exit(1);
-	//}
-
-	close(i2cbus);
+	read(i2cbus, readbuffer, 4);	
 }
 
 static char update_byte(char byte, char bit, char value) {
@@ -204,6 +202,8 @@ int read_raw(char address, char channel, int bitrate, int pga,
 	int timeout = 1000; // number of reads before a timeout occurs
 	int x = 0;
 
+	open_i2c_bus();
+
 	do {
 		if (bitrate == 18) {
 			read_byte_array(address, config, 3);
@@ -230,6 +230,8 @@ int read_raw(char address, char channel, int bitrate, int pga,
 
 		x++;
 	} while (1);
+
+	close_i2c_bus();
 
 	// extract the returned bytes and combine in the correct order
 	switch (bitrate) {

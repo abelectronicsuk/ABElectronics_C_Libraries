@@ -10,11 +10,6 @@
 /* Initialise the IO Pi - run before calling any other methods */
 void IOPi_init(char address);
 
-// local methods
-
-static char updatebyte(char address, char byte, char bit, char value);
-static char checkbit(char address, char byte, char bit);
-
 // public methods
 
 /*
