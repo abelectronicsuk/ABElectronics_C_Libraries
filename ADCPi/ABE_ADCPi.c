@@ -18,14 +18,8 @@
  */
 
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 #include <errno.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
 
@@ -172,15 +166,15 @@ static char set_channel(char config, char channel) {
 	return (config);
 }
 
-/// <summary>
-/// Reads the raw value from the selected ADC channel
-/// </summary>
-/// <param name="address">I2C Address e.g.  0x68</param>
-/// <param name="channel">1 to 4</param>
-/// <param name="bitrate">12, 14, 16 or 18</param>
-/// <param name="pga">1, 2, 4 or 8</param>
-/// <param name="conversionmode">0 = one shot conversion, 1 = continuous conversion</param>
-/// <returns>raw long value from ADC buffer</returns>
+/**
+* Reads the raw value from the selected ADC channel
+* @param address - I2C address for the target device e.g. 0x68
+* @param channel - 1 to 4
+* @param bitrate - 12, 14, 16 or 18
+* @param pga - 1, 2, 4 or 8
+* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @returns - raw long value from ADC buffer
+*/
 int read_raw(char address, char channel, int bitrate, int pga,
 		char conversionmode) {
 	// variables for storing the raw bytes from the ADC
@@ -270,15 +264,15 @@ int read_raw(char address, char channel, int bitrate, int pga,
 	return (t);
 }
 
-/// <summary>
-/// Returns the voltage from the selected ADC channel
-/// </summary>
-/// <param name="address">I2C Address e.g.  0x68</param>
-/// <param name="channel">1 to 4</param>
-/// <param name="bitrate">12, 14, 16 or 18</param>
-/// <param name="pga">1, 2, 4 or 8</param>
-/// <param name="conversionmode">0 = one shot conversion, 1 = continuous conversion</param>
-/// <returns>double voltage value from ADC</returns>
+/**
+* Returns the voltage from the selected ADC channel
+* @param address - I2C address for the target device e.g. 0x68
+* @param channel - 1 to 4
+* @param bitrate - 12, 14, 16 or 18
+* @param pga - 1, 2, 4 or 8
+* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @returns - double voltage value from ADC
+*/
 double read_voltage(char address, char channel, int bitrate, int pga,
 		char conversionmode) {
 	int raw = read_raw(address, channel, bitrate, pga, conversionmode); // get the raw value

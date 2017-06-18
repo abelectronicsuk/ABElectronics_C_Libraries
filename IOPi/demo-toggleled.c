@@ -6,20 +6,11 @@
  *  	This demonstration shows how to use a button on pin 15 of bus 2 to toggle the output of an led connected to pin 11 of bus 1.
  *  	A 300R resistor should be connected in series with the LED and the IO Pi to limit the current.
  *
- *      compile with "gcc ABE_helpers.c ABE_IoPi.c demo-toggleled.c -o demo-toggleled"
+ *      compile with "gcc ABE_IoPi.c demo-toggleled.c -o demo-toggleled"
  *      run with "./demo-toggleled"
  */
 
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
 #include <time.h>
 
 

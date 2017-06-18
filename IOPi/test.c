@@ -3,20 +3,11 @@
  *
  *  Created on: 23 Jan 2015
  *
- *      compile with "gcc ABE_helpers.c ABE_IoPi.c test.c -o test"
+ *      compile with "gcc ABE_IoPi.c test.c -o test"
  *      run with "./test"
  */
 
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
 #include <time.h>
 
 #include "ABE_IoPi.h"

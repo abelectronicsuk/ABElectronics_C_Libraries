@@ -1,21 +1,17 @@
 /*
- * ABE_ADCDACPI.c
- *
- *  Created on: 12 Jan 2016
- *      Author: andrew
- */
+================================================
+ABElectronics UK ADC-DAC Pi
+Version 1.0 Created 16/06/2017
+================================================
+
+*/
 
 #include <stdint.h>
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <getopt.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <linux/types.h>
 #include <linux/spi/spidev.h>
-#include <time.h>
-#include <unistd.h>
+
 
 // local variables
 static const char *adcdevice = "/dev/spidev0.0";
@@ -33,10 +29,10 @@ static int dacgain = 1; // gain setting for the DAC chip.
 static double dacvoltage = 2.048; // maximum voltage for the DAC output
 
 int open_adc() {
-	/*
-	 Open the ADC SPI bus channel
-	 This needs to be called before using the DAC
-	 */
+	/**
+	* Open the ADC SPI bus channel
+	* This needs to be called before using the DAC
+	*/
 
 	// Open SPI device
 	if ((adc = open(adcdevice, O_RDWR)) < 0)
@@ -52,17 +48,17 @@ int open_adc() {
 }
 
 void close_adc() {
-	/*
-	 Close the ADC SPI bus channel
-	 */
+	/**
+	* Close the ADC SPI bus channel
+	*/
 	close(adc);
 }
 
 int open_dac() {
-	/*
-	 Open the DAC SPI bus channel
-	 This needs to be called before using the DAC
-	 */
+	/**
+	* Open the DAC SPI bus channel
+	* This needs to be called before using the DAC
+	*/
 
 	// Open SPI device
 	if ((dac = open(dacdevice, O_RDWR)) < 0)
@@ -78,35 +74,35 @@ int open_dac() {
 }
 
 void close_dac() {
-	/*
-	 Close the DAC SPI bus channel
-	 */
+	/**
+	* Close the DAC SPI bus channel
+	*/
 	close(dac);
 }
 
 double read_adc_voltage(int channel, int mode) {
-	/*
-	 Read the voltage from the ADC
-	 Channel: 1 or 2
-	 Mode: 0 = Single Ended or 1 = Differential
-	 When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
-	 When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
-
-	 Returns voltage between 0 and 3.3V
-	 */
+	/**
+	* Read the voltage from the ADC
+	* @param channel - 1 or 2
+	* @param mode - 0 = Single Ended or 1 = Differential
+	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
+	* @returns between 0V and the reference voltage
+	*/
+	
 	int rawval = read_adc_raw(channel, mode);
 	return ((adcrefvoltage / 4096) * (double) rawval);
 }
 
 int read_adc_raw(int channel, int mode) {
-	/*
-	 Read the raw value from the ADC
-	 Channel: 1 or 2
-	 Mode: 0 = Single Ended or 1 = Differential
-	 When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
-	 When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
-	 Returns 12 bit value between 0 and 4096
-	 */
+	/**
+	* Read the raw value from the ADC
+	* @param channel -  1 to 8
+	* @param mode -  0 = Single Ended or 1 = Differential
+	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
+	* @returns 12 bit value between 0 and 4096
+	*/
 	if (channel == 1) {
 		if (mode == 0) {
 			adctx[1] = 0x80;
@@ -138,19 +134,21 @@ int read_adc_raw(int channel, int mode) {
 }
 
 void set_adc_refvoltage(double ref) {
-	/*
-	 Set the reference voltage for the adc
-	 Set this value to be the same as the voltage measured on the 3.3V rail on the Raspberry Pi
-	 */
+	/**
+	* Set the reference voltage for the adc
+	* @param ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi
+	* If using the on board voltage reference then the value will be 4.096
+	*/
 	adcrefvoltage = ref;
 }
 
 void set_dac_raw(uint16_t raw, int channel) {
-	/*
-	 Set the raw value from the selected channel on the DAC
-	 Channel = 1 or 2
-	 Value between 0 and 4095
-	 */
+	/**
+	* Set the raw value from the selected channel on the DAC
+	* @param raw - between 0 and 4095
+	* @param channel - 1 or 2
+	* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2
+	*/
 
 	uint16_t tx;
 
@@ -180,12 +178,12 @@ void set_dac_raw(uint16_t raw, int channel) {
 }
 
 void set_dac_voltage(double voltage, int channel) {
-	/*
-	 Set the DAC voltage
-	 Channel = 1 or 2
-	 Voltage between 0 and 2.048 when gain is set to 1
-	 0 and 3.3 when gain is set to 2
-	 */
+	/**
+	* Set the DAC voltage
+	* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2
+	* @param channel - 1 or 2
+	* @param gain - 1 or 2
+	*/
 	if (channel == 1) {
 		adctx[1] = 0x80;
 	} else if (channel == 2) {
@@ -202,12 +200,10 @@ void set_dac_voltage(double voltage, int channel) {
 }
 
 void set_dac_gain(int gain) {
-	/*
-	 Set the DAC gain
-	 Gain = 1 or 2
-	 Voltage between 0 and 2.048 when gain is set to 1
-	 0 and 3.3 when gain is set to 2
-	 */
+	/**
+	* Set the DAC gain
+	* @param gain - 1 or 2	
+	*/
 	if (gain == 1) {
 		dacgain = 1;
 		dacvoltage = 2.048;

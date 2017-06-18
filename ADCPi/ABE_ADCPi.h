@@ -18,27 +18,27 @@ read_voltage(address,channel,bitrate,pga,conversionmode) returns the voltage pre
  */
 
 
-/// <summary>
-/// Reads the raw value from the selected ADC channel
-/// </summary>
-/// <param name="address">I2C Address e.g.  0x68</param>
-/// <param name="channel">1 to 4</param>
-/// <param name="bitrate">12, 14, 16 or 18</param>
-/// <param name="pga">1, 2, 4 or 8</param>
-/// <param name="conversionmode">0 = one shot conversion, 1 = continuous conversion</param>
-/// <returns>raw long value from ADC buffer</returns>
+ /**
+ * Reads the raw value from the selected ADC channel
+ * @param address - I2C address for the target device e.g. 0x68
+ * @param channel - 1 to 4
+ * @param bitrate - 12, 14, 16 or 18
+ * @param pga - 1, 2, 4 or 8
+ * @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+ * @returns - raw long value from ADC buffer
+ */
 long read_raw(char address, char channel, int bitrate, int pga,	char conversionmode);
 
 
-/// <summary>
-/// Returns the voltage from the selected ADC channel
-/// </summary>
-/// <param name="address">I2C Address e.g.  0x68</param>
-/// <param name="channel">1 to 4</param>
-/// <param name="bitrate">12, 14, 16 or 18</param>
-/// <param name="pga">1, 2, 4 or 8</param>
-/// <param name="conversionmode">0 = one shot conversion, 1 = continuous conversion</param>
-/// <returns>double voltage value from ADC</returns>
+/**
+* Returns the voltage from the selected ADC channel
+* @param address - I2C address for the target device e.g. 0x68
+* @param channel - 1 to 4
+* @param bitrate - 12, 14, 16 or 18
+* @param pga - 1, 2, 4 or 8
+* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @returns - double voltage value from ADC
+*/
 double read_voltage(char address, char channel, int bitrate, int pga, char conversionmode);
 
 

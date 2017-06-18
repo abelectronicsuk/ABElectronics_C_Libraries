@@ -12,15 +12,9 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 #include <errno.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
-#include <time.h>
 #include <math.h>
 
 // Define registers values from datasheet
@@ -174,9 +168,12 @@ static int gpio_write(int pin, int value) {
 // public methods
 
 int servopi_init(char address, char use_oe_pin) {
-	/*
-	 init object with i2c address, default is 0x40 for ServoPi board
-	 */
+	/**
+	* Initialise the Servo Pi - run before calling any other methods
+	* @param address - I2C address
+	* @param use_oe_pin - Enable the Output Enable pin on the GPIO port
+	* @returns - 0 = OK, 1 = GPIO enable failed, 2 = GPIO direction set failed
+	*/
 	write_byte_data(address, MODE1, 0x00);
 
 	// set the gpio pin as an output for the Output Enable Pin if use_oe_pin = 1
@@ -199,9 +196,11 @@ int servopi_init(char address, char use_oe_pin) {
 }
 
 void set_pwm_freq(double freq, char address) {
-	/*
-	 Set the PWM frequency
-	 */
+	/**
+	* Set the PWM frequency
+	* @param freq - required frequency
+	* @param address - I2C address
+	*/
 
 	double scaleval = 25000000.0; // 25MHz
 	scaleval /= 4096.0; // 12-bit
@@ -220,9 +219,13 @@ void set_pwm_freq(double freq, char address) {
 }
 
 void set_pwm(char channel, int on, int off, char address) {
-	/*
-	 set the output on a single channel
-	 */
+	/**
+	* Set the output on single channels
+	* @param channel - 1 to 16
+	* @param on - time period 0 to 4096
+	* @param off - time period 0 to 4096
+	* @param address - I2C address
+	*/
 	channel -= 1;
 	write_byte_data(address, LED0_ON_L + 4 * channel, on & 0xFF);
 	write_byte_data(address, LED0_ON_H + 4 * channel, on >> 8);
@@ -232,9 +235,12 @@ void set_pwm(char channel, int on, int off, char address) {
 }
 
 void set_all_pwm(int on, int off, char address) {
-	/*
-	 set the output on all channels
-	 */
+	/**
+	* Set the output on all channels
+	* @param on - time period 0 to 4096
+	* @param off - time period 0 to 4096
+	* @param address - I2C address
+	*/
 
 	write_byte_data(address, ALL_LED_ON_L, on & 0xFF);
 	write_byte_data(address, ALL_LED_ON_H, on >> 8);
@@ -244,9 +250,10 @@ void set_all_pwm(int on, int off, char address) {
 }
 
 int output_disable() {
-	/*
-	 disable output via OE pin
-	 */
+	/**
+	* Disable the output via OE pin
+	* @returns - 0 = OK, 1 = GPIO failed
+	*/
 	if (-1 == gpio_write(ENABLE_PIN, 1)) {
 		return (1);
 	}
@@ -254,9 +261,10 @@ int output_disable() {
 }
 
 int output_enable() {
-	/*
-	 enable output via OE pin
-	 */
+	/**
+	* Enable the output via OE pin
+	* @returns - 0 = OK, 1 = GPIO failed
+	*/
 	if (-1 == gpio_write(ENABLE_PIN, 0)) {
 		return (1);
 	}
@@ -265,9 +273,10 @@ int output_enable() {
 }
 
 void set_allcall_address(char allcalladdress, char address) {
-	/*
-	 Set the I2C address for the All Call function
-	 */
+	/**
+	* Set the I2C address for the All Call function
+	* @param allcalladdress - I2C address
+	*/
 	char oldmode = read_byte_data(address, MODE1);
 	char newmode = oldmode | (1 << 0);
 	write_byte_data(address, MODE1, newmode);
@@ -276,9 +285,10 @@ void set_allcall_address(char allcalladdress, char address) {
 }
 
 void enable_allcall_address(char address) {
-	/*
-	 Enable the I2C address for the All Call function
-	 */
+	/**
+	* Enable the I2C address for the All Call function
+	* @param address - I2C address
+	*/
 	char oldmode = read_byte_data(address, MODE1);
 	char newmode = oldmode | (1 << 0);
 	write_byte_data(address, MODE1, newmode);
@@ -286,9 +296,10 @@ void enable_allcall_address(char address) {
 }
 
 void disable_allcall_address(char address) {
-	/*
-	 Disable the I2C address for the All Call function
-	 */
+	/**
+	* Disable the I2C address for the All Call function
+	* @param address - I2C address
+	*/
 	char oldmode = read_byte_data(address, MODE1);
 	char newmode = oldmode & ~(1 << 0);
 	write_byte_data(address, MODE1, newmode);

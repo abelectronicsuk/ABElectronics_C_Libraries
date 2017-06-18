@@ -9,18 +9,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
 #include <time.h>
 
 
 #include "ABE_ADCPi.h"
+
+#define numberofsamples 1000
 
 void clearscreen ()
 {
@@ -33,7 +27,6 @@ int main(int argc, char **argv){
 	struct timeval t1, t2;
 	double elapsedTime;
 
-	int numberofsamples = 240;
 	double samplearray[numberofsamples];
 
 	// start timer
