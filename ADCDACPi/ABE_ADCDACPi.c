@@ -21,6 +21,7 @@ static uint32_t speed = 2500000; // SPI bus speed
 
 static uint8_t adctx[] = { 0x01, 0x80, 0x00 }; // transmit buffer for the ADC
 static char adcrx[3]; // receive buffer for the adc;
+static uint8_t dactx[2];
 static int adc; // adc object
 static int dac; // dac object
 
@@ -89,7 +90,7 @@ double read_adc_voltage(int channel, int mode) {
 	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
 	* @returns between 0V and the reference voltage
 	*/
-	
+
 	int rawval = read_adc_raw(channel, mode);
 	return ((adcrefvoltage / 4096) * (double) rawval);
 }
@@ -136,8 +137,7 @@ int read_adc_raw(int channel, int mode) {
 void set_adc_refvoltage(double ref) {
 	/**
 	* Set the reference voltage for the adc
-	* @param ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi
-	* If using the on board voltage reference then the value will be 4.096
+	* @param ref - Set this value to be the same as the voltage measured on the 3.3V GPIO pin
 	*/
 	adcrefvoltage = ref;
 }
@@ -147,27 +147,17 @@ void set_dac_raw(uint16_t raw, int channel) {
 	* Set the raw value from the selected channel on the DAC
 	* @param raw - between 0 and 4095
 	* @param channel - 1 or 2
-	* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2
 	*/
 
-	uint16_t tx;
 
-	if (channel == 1) {
-		raw = (raw & 0x0FFF) | 0x3000;
-
-	} else if (channel == 2) {
-		raw = raw | 0xF000;
-	} else {
-		return;
-	}
+	dactx[1] = (raw & 0xff);
+	dactx[0] = (((raw >> 8) & 0xff) | (channel - 1) << 7 | 0x1 << 5 | 1 << 4);
 
 	if (dacgain == 2) {
-		raw = (raw &= ~(1 << 13));
-	}
+		dactx[0] = (dactx[0] &= ~(1 << 5));
+    }
 
-	tx = (raw << 8) | (raw >> 8);
-
-	struct spi_ioc_transfer tr = { .tx_buf = (unsigned long) &tx, .rx_buf =
+	struct spi_ioc_transfer tr = { .tx_buf = (unsigned long) &dactx, .rx_buf =
 			(unsigned long) NULL, .len = 2, .delay_usecs = 0, .speed_hz = speed,
 			.bits_per_word = 8, .cs_change = 0, };
 
@@ -180,9 +170,8 @@ void set_dac_raw(uint16_t raw, int channel) {
 void set_dac_voltage(double voltage, int channel) {
 	/**
 	* Set the DAC voltage
-	* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2
+	* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 3.3 when gain is set to 2
 	* @param channel - 1 or 2
-	* @param gain - 1 or 2
 	*/
 	if (channel == 1) {
 		adctx[1] = 0x80;
@@ -202,7 +191,7 @@ void set_dac_voltage(double voltage, int channel) {
 void set_dac_gain(int gain) {
 	/**
 	* Set the DAC gain
-	* @param gain - 1 or 2	
+	* @param gain - 1 or 2 - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 3.3V when gain is set to 2
 	*/
 	if (gain == 1) {
 		dacgain = 1;

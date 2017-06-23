@@ -57,16 +57,14 @@ double read_adc_raw(int channel, int mode);
 
 /**
 * Set the reference voltage for the adc
-* @param ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi
-* If using the on board voltage reference then the value will be 4.096
+* @param ref - Set this value to be the same as the voltage measured on the 3.3V GPIO pin
 */
 void set_adc_refvoltage(double ref);
 
 /**
 * Set the DAC voltage
-* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2
+* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 3.3 when gain is set to 2
 * @param channel - 1 or 2
-* @param gain - 1 or 2
 */
 void set_dac_voltage(double voltage, int channel);
 
@@ -74,13 +72,12 @@ void set_dac_voltage(double voltage, int channel);
 * Set the raw value from the selected channel on the DAC
 * @param raw - between 0 and 4095
 * @param channel - 1 or 2
-* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2
 */
 void set_dac_raw(uint16_t raw, int channel);
 
 /**
 * Set the DAC gain
-* @param gain - 1 or 2
+* @param gain - 1 or 2 - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 3.3V when gain is set to 2
 */
 void set_dac_gain(int gain);
 
