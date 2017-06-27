@@ -18,6 +18,8 @@ This library reads input values from the [ADC Differential Pi](https://www.abele
 ### ADC Pi
 This library reads input values from the [ADC Pi Plus ](https://www.abelectronics.co.uk/p/56/ADC-Pi-Plus---Raspberry-Pi-Analogue-to-Digital-converter "ADC Pi Plus"), [ADC Pi Zero](https://www.abelectronics.co.uk/p/69/ADC-Pi-Zero-Raspberry-Pi-Analogue-to-Digital-converter "ADC Pi Zero") and [ADC Pi](https://www.abelectronics.co.uk/kb/article/1044/adc-pi "ADC Pi").
 
+### Expander Pi
+This libary controls all of the functions on the [Expander Pi](https://www.abelectronics.co.uk/p/50/Expander-Pi "Expander Pi")
 
 ### IO Pi
 This library reads and writes to the [IO Pi Plus](https://www.abelectronics.co.uk/p/54/IO-Pi-Plus "IO Pi Plus"), [IO Pi Zero](https://www.abelectronics.co.uk/p/71/IO-Pi-Zero "IO Pi Zero") and [IO Pi](https://www.abelectronics.co.uk/kb/article/1042/io-pi "IO Pi").
