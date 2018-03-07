@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "ABE_ExpanderPi.h"
 

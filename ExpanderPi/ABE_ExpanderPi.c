@@ -12,6 +12,7 @@ apt-get install libi2c-dev
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/types.h>
@@ -257,17 +258,6 @@ void adc_close() {
 	close(adc);
 }
 
-double adc_read_voltage(int channel, int mode) {
-	/**
-	* Read the voltage from the ADC
-	* @param channel - 1 or 2
-	* @param mode - 0 = Single Ended or 1 = Differential
-	* @returns between 0V and the reference voltage
-	*/
-	int rawval = adc_read_raw(channel, mode);
-	return ((adcrefvoltage / 4096) * (double)rawval);
-}
-
 int adc_read_raw(int channel, int mode) {
 	/**
 	* Read the raw value from the ADC
@@ -300,6 +290,17 @@ int adc_read_raw(int channel, int mode) {
 
 	return (((adcrx[1] & 0x0F) << 8) + (adcrx[2]));
 
+}
+
+double adc_read_voltage(int channel, int mode) {
+	/**
+	* Read the voltage from the ADC
+	* @param channel - 1 or 2
+	* @param mode - 0 = Single Ended or 1 = Differential
+	* @returns between 0V and the reference voltage
+	*/
+	int rawval = adc_read_raw(channel, mode);
+	return ((adcrefvoltage / 4096) * (double)rawval);
 }
 
 void adc_set_refvoltage(double ref) {
@@ -810,7 +811,7 @@ void rtc_set_frequency(unsigned char frequency) {
 	}
 }
 
-void rtc_write_memory(unsigned char address, unsigned char valuearray[]) {
+void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 	/**
 	* write to the memory on the ds1307.  The ds1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes
 	* @param address - 0x08 to 0x3F

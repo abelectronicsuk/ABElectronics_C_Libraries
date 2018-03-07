@@ -19,8 +19,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 
 static int i2cbus;
@@ -41,7 +44,7 @@ static void close_i2c_bus() {
 	close(i2cbus);
 }
 
-static void read_byte_array(char address, char reg, char length) {	
+static void read_byte_array(char address, char reg, char length) {
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
 		printf("Failed to write to i2c port for read\n");
@@ -55,7 +58,7 @@ static void read_byte_array(char address, char reg, char length) {
 		exit(1);
 	}
 
-	read(i2cbus, readbuffer, 4);	
+	read(i2cbus, readbuffer, 4);
 }
 
 static char update_byte(char byte, char bit, char value) {

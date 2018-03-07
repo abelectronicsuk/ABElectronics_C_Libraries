@@ -11,6 +11,7 @@ Version 1.0 Created 16/06/2017
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
+#include <unistd.h>
 
 
 // local variables
@@ -81,20 +82,6 @@ void close_dac() {
 	close(dac);
 }
 
-double read_adc_voltage(int channel, int mode) {
-	/**
-	* Read the voltage from the ADC
-	* @param channel - 1 or 2
-	* @param mode - 0 = Single Ended or 1 = Differential
-	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
-	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
-	* @returns between 0V and the reference voltage
-	*/
-
-	int rawval = read_adc_raw(channel, mode);
-	return ((adcrefvoltage / 4096) * (double) rawval);
-}
-
 int read_adc_raw(int channel, int mode) {
 	/**
 	* Read the raw value from the ADC
@@ -132,6 +119,20 @@ int read_adc_raw(int channel, int mode) {
 
 	return (((adcrx[1] & 0x0F) << 8) + (adcrx[2]));
 
+}
+
+double read_adc_voltage(int channel, int mode) {
+	/**
+	* Read the voltage from the ADC
+	* @param channel - 1 or 2
+	* @param mode - 0 = Single Ended or 1 = Differential
+	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
+	* @returns between 0V and the reference voltage
+	*/
+
+	int rawval = read_adc_raw(channel, mode);
+	return ((adcrefvoltage / 4096) * (double) rawval);
 }
 
 void set_adc_refvoltage(double ref) {

@@ -12,8 +12,11 @@ apt-get install libi2c-dev
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <time.h> 
 
@@ -229,7 +232,7 @@ void rtc_set_frequency(unsigned char frequency) {
 	}
 }
 
-void rtc_write_memory(unsigned char address, unsigned char valuearray[]) {
+void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 	/**
 	* write to the memory on the ds1307
 	* the ds1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes

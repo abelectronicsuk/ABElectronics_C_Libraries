@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <time.h>
+#include <unistd.h>
 
 
 #include "ABE_ADCPi.h"
