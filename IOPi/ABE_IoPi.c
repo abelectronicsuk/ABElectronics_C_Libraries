@@ -17,9 +17,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
+
+
 
 #define IODIRA 0x00 // IO direction A - 1= input 0 = output
 #define IODIRB 0x01 // IO direction B - 1= input 0 = output

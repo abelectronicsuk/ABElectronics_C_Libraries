@@ -7,9 +7,10 @@
  *      run with "./demo-iopiread"
  */
 
+#include <string.h>
 #include <stdio.h>
 #include <time.h>
-
+#include <unistd.h>
 
 #include "ABE_IoPi.h"
 

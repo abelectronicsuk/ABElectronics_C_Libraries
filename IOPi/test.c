@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <time.h>
-
+#include <unistd.h>
 #include "ABE_IoPi.h"
 
 int main(int argc, char **argv) {

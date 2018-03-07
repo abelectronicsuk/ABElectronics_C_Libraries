@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 #include <time.h>
-
+#include <unistd.h>
 
 #include "ABE_IoPi.h"
 
