@@ -41,7 +41,7 @@ int main(int argc, char **argv){
 	int x;
 	int channel = 1;
 	for (x = 0; x <= numberofsamples; x++){
-		samplearray[x] = adc_read_voltage(1, 0); // read from adc chip 1, channel 1, 12 bit, pga gain set to 1 and continuous conversion mode
+		samplearray[x] = adc_read_voltage(1, 0); // read from adc channel 1 in single ended mode
 
 	}
 
