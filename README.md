@@ -21,6 +21,9 @@ This library reads input values from the [ADC Pi](https://www.abelectronics.co.u
 ### Expander Pi
 This library controls all of the functions on the [Expander Pi](https://www.abelectronics.co.uk/p/50/Expander-Pi "Expander Pi")
 
+### I2C Switch  
+This library controls the functions of the 4 channel [I2C switch](https://www.abelectronics.co.uk/p/84/i2c-switch "I2C Switch")  
+
 ### IO Pi
 This library reads and writes to the [IO Pi Plus](https://www.abelectronics.co.uk/p/54/IO-Pi-Plus "IO Pi Plus"), [IO Pi Zero](https://www.abelectronics.co.uk/p/71/IO-Pi-Zero "IO Pi Zero") and [IO Pi](https://www.abelectronics.co.uk/kb/article/1042/io-pi "IO Pi").
 
