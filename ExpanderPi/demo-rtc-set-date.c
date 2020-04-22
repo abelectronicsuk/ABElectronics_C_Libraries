@@ -45,10 +45,10 @@ int main(int argc, char **argv) {
 			puts("strftime failed");
 		}
 
-		//usleep(1000000); // sleep for a second
-
-		usleep(10000); // sleep for a second
+		usleep(1000000); // sleep for a second
 	}
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

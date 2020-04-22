@@ -39,8 +39,8 @@ int main(int argc, char **argv){
 	gettimeofday(&t1, NULL);
 
 	int x;
-	int channel = 1;
-	for (x = 0; x <= numberofsamples; x++){
+
+	for (x = 0; x < numberofsamples; x++){
 		samplearray[x] = adc_read_voltage(1, 0); // read from adc channel 1 in single ended mode
 
 	}
@@ -49,8 +49,9 @@ int main(int argc, char **argv){
 	    gettimeofday(&t2, NULL);
 
 	    // calculate the average value
-	    double average, sum;
-	    for (x = 0; x <= numberofsamples; x++){
+	    double average = 0;
+		double sum = 0;
+	    for (x = 0; x < numberofsamples; x++){
 	    	sum += samplearray[x];
 	    }
 
@@ -66,7 +67,7 @@ int main(int argc, char **argv){
 	    printf("%d samples in %G ms.\nThe sample rate was %G samples per second\nThe average voltage was %Gv",numberofsamples,elapsedTime,samplerate,average);
 
 
-	return (0);
-
+	(void)argc;
+	(void)argv;
 	return (0);
 }

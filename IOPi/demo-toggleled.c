@@ -58,5 +58,7 @@ int main(int argc, char **argv){
 		usleep(100000); // sleep for 100ms
 	}
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

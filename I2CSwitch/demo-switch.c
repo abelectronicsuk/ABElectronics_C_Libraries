@@ -39,7 +39,8 @@ int main(int argc, char **argv){
 		printf("Failed to change I2C switch to channel %d \n", channel);
 	}
 
-
+	(void)argc;
+	(void)argv;
 	return (0);
 }
 

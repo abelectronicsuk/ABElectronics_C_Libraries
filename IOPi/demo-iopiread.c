@@ -53,6 +53,8 @@ int main(int argc, char **argv){
 		usleep(200000); // sleep 0.2 seconds
 
 	}
-
+	
+	(void)argc;
+	(void)argv;
 	return (0);
 }

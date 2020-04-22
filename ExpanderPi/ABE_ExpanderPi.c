@@ -286,7 +286,7 @@ int adc_read_raw(int channel, int mode) {
 		(uintptr_t)adcrx,.len = 3,.delay_usecs = 0,.speed_hz = speed,
 		.bits_per_word = 8, };
 
-	int ret = ioctl(adc, SPI_IOC_MESSAGE(1), &tr);
+	if (ioctl(adc, SPI_IOC_MESSAGE(1), &tr) == -1){ return 0;}
 
 	return (((adcrx[1] & 0x0F) << 8) + (adcrx[2]));
 
@@ -364,7 +364,8 @@ void dac_set_raw(uint16_t raw, int channel, int gain) {
 	}
 
 	if (gain == 2) {
-		raw = (raw &= ~(1 << 13));
+		uint16_t x = raw;
+		raw = (x &= ~(1 << 13));
 	}
 
 	tx = (raw << 8) | (raw >> 8);
@@ -826,6 +827,7 @@ void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 			unsigned char *writearray = malloc(length + 1);
 
 			if (errno == ENOMEM) { // Fail!!!!
+				free(writearray);
 				printf("memory allocation error: not enough system memory to allocate array");
 			}
 			else {
@@ -867,6 +869,7 @@ unsigned char *rtc_read_memory(unsigned char address, int length) {
 			unsigned char *writearray = malloc(length);
 
 			if (errno == ENOMEM) { // Fail!!!!
+				free(writearray);
 				printf("memory allocation error: not enough system memory to allocate array");
 				return NULL;
 			}

@@ -29,5 +29,7 @@ int main(int argc, char **argv){
 		usleep(1000000);
 	}
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

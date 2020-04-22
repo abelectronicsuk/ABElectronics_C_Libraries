@@ -13,18 +13,18 @@
 #include <time.h>
 #include <unistd.h>
 
-
 #include "ABE_ADCPi.h"
 
 #define numberofsamples 1000
 
-void clearscreen ()
+void clearscreen()
 {
-    printf("\033[2J\033[1;1H");
+	printf("\033[2J\033[1;1H");
 }
 
-int main(int argc, char **argv){
-	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
+int main(int argc, char **argv)
+{
+	setvbuf(stdout, NULL, _IONBF, 0); // needed to print to the command line
 
 	struct timeval t1, t2;
 	double elapsedTime;
@@ -35,33 +35,35 @@ int main(int argc, char **argv){
 	gettimeofday(&t1, NULL);
 
 	int x;
-	int channel = 1;
-	for (x = 0; x <= numberofsamples; x++){
-		samplearray[x] = read_voltage(0x68,1, 12, 1, 1); // read from adc chip 1, channel 1, 12 bit, pga gain set to 1 and continuous conversion mode
 
+	for (x = 0; x < numberofsamples; x++)
+	{
+		samplearray[x] = read_voltage(0x68, 1, 12, 1, 1); // read from adc chip 1, channel 1, 12 bit, pga gain set to 1 and continuous conversion mode
 	}
 
 	// stop timer
-	    gettimeofday(&t2, NULL);
+	gettimeofday(&t2, NULL);
 
-	    // calculate the average value
-	    double average, sum;
-	    for (x = 0; x <= numberofsamples; x++){
-	    	sum += samplearray[x];
-	    }
+	// calculate the average value
+	double average = 0;
+	double sum = 0;
+	for (x = 0; x < numberofsamples; x++)
+	{
+		sum += samplearray[x];
+	}
 
-	    average = sum/numberofsamples;
+	average = sum / numberofsamples;
 
-	    // compute and print the elapsed time in millisec
-	    elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-	    elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+	// compute and print the elapsed time in millisec
+	elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;	   // sec to ms
+	elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0; // us to ms
 
-	    // compute the sample rate
-	    double samplerate = (numberofsamples / elapsedTime) * 1000;
+	// compute the sample rate
+	double samplerate = (numberofsamples / elapsedTime) * 1000;
 
-	    printf("%d samples in %G ms.\nThe sample rate was %G samples per second\nThe average voltage was %Gv",numberofsamples,elapsedTime,samplerate,average);
+	printf("%d samples in %G ms.\nThe sample rate was %G samples per second\nThe average voltage was %Gv", numberofsamples, elapsedTime, samplerate, average);
 
-
+	(void)argc;
+	(void)argv;
 	return (0);
 }
-

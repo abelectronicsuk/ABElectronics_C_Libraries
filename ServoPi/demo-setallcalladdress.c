@@ -29,7 +29,6 @@ void clearscreen() {
 int main(int argc, char **argv) {
 	setvbuf(stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	int x;
 	int a;
 
 	// initialise the servo pi on I2C address 0x40.  Check the returned value to ensure the Servo Pi initialised correctly
@@ -48,5 +47,7 @@ int main(int argc, char **argv) {
 	set_allcall_address(0x60, 0x40);
 	enable_allcall_address(0x40);
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

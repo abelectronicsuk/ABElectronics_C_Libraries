@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
 	int a = 0;
 
-	for (a = 0; a <= sizeof(inval); a++) {
+	for (a = 0; a < (int)sizeof(inval); a++) {
 		bytearray[a] = (inval >> a * 8) & 0xFF;
 	}
 
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 	// The array is allocated by the rtc_read_memory function, use a pointer to point to the memory location of this array.
 	unsigned char *readarray = rtc_read_memory(0x08, sizeof(inval));
 
-	for (a = 0; a <= sizeof(outval); a++) { // convert the bytes from the readarray into a number
+	for (a = 0; a < (int)sizeof(outval); a++) { // convert the bytes from the readarray into a number
 		outval |= readarray[a] << (a * 8);
 	}
 
@@ -51,5 +51,7 @@ int main(int argc, char **argv) {
 
 	printf("Number read from SRAM: %d", outval);
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

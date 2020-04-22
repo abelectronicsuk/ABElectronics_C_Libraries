@@ -208,7 +208,7 @@ char set_channel_state(char address, char channel, char state) {
 		fprintf(stderr, "channel out of range. 1 - 4\n");
 		return(-1);
 	}
-	if (state < 0 || state > 1){
+	if (state > 1){
 		fprintf(stderr, "state out of range. 0 or 1\n");
 		return(-1);
 	}

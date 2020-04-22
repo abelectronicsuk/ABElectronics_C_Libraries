@@ -45,7 +45,7 @@ static void close_i2c_bus() {
 	close(i2cbus);
 }
 
-static void read_byte_array(char address, char reg, char length) {
+static void read_byte_array(char address, char reg) {
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
 		printf("Failed to write to i2c port for read\n");
@@ -204,13 +204,13 @@ int read_raw(char address, char channel, int bitrate, int pga,
 
 	do {
 		if (bitrate == 18) {
-			read_byte_array(address, config, 3);
+			read_byte_array(address, config);
 			h = readbuffer[0];
 			m = readbuffer[1];
 			l = readbuffer[2];
 			s = readbuffer[3];
 		} else {
-			read_byte_array(address, config, 2);
+			read_byte_array(address, config);
 			h = readbuffer[0];
 			m = readbuffer[1];
 			s = readbuffer[2];

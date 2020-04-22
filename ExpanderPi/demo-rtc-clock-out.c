@@ -26,5 +26,7 @@ int main(int argc, char **argv) {
 	// enable the square-wave output
 	rtc_enable_output();
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

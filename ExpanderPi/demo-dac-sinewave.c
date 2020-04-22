@@ -38,5 +38,8 @@ int main(int argc, char **argv){
 	}
 
 	dac_close();
+
+	(void)argc;
+	(void)argv;
 	return (0);
 }

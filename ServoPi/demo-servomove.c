@@ -33,7 +33,6 @@ void clearscreen() {
 int main(int argc, char **argv) {
 	setvbuf(stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	int x;
 	int a;
 
 	// initialise the servo pi on I2C address 0x40 with the Output Enable pin enabled.
@@ -63,5 +62,7 @@ int main(int argc, char **argv) {
 		usleep(500000); // sleep 0.5 seconds
 	}
 
+	(void)argc;
+	(void)argv;
 	return (0);
 }

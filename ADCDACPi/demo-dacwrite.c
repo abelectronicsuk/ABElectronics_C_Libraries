@@ -30,5 +30,8 @@ int main(int argc, char **argv){
 	set_dac_voltage(2.5, 2); // set the voltage on channel 2 to 2.5V
 
 	close_dac();
+
+	(void)argc;
+	(void)argv;
 	return (0);
 }

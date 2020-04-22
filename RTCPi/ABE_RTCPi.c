@@ -248,6 +248,7 @@ void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 			unsigned char *writearray = malloc(length + 1);
 
 			if (errno == ENOMEM) { // Fail!!!!
+				free(writearray);
 				printf("memory allocation error: not enough system memory to allocate array");
 			}
 			else {
@@ -290,6 +291,7 @@ unsigned char *rtc_read_memory(unsigned char address, int length) {
 			unsigned char *writearray = malloc(length);
 
 			if (errno == ENOMEM) { // Fail!!!!
+				free(writearray);
 				printf("memory allocation error: not enough system memory to allocate array");
 				return NULL;
 			}
