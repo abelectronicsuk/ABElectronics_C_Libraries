@@ -22,7 +22,7 @@ void clearscreen ()
 int main(int argc, char **argv){
 	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	if (open_adc() != 1){ // open the DAC spi channel
+	if (open_adc() != 1){ // open the ADC spi channel
 			exit(1); // if the SPI bus fails to open exit the program
 		}
 
