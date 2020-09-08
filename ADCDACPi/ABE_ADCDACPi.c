@@ -1,7 +1,8 @@
 /*
 ================================================
 ABElectronics UK ADC-DAC Pi
-Version 1.0 Created 16/06/2017
+Version 1.1 Update 08/09/2020
+
 ================================================
 
 */
@@ -18,7 +19,8 @@ Version 1.0 Created 16/06/2017
 static const char *adcdevice = "/dev/spidev0.0";
 static const char *dacdevice = "/dev/spidev0.1";
 static uint8_t mode = SPI_MODE_0; // SPI_MODE_0
-static uint32_t speed = 2500000; // SPI bus speed
+static uint32_t adcspeed = 1100000; // SPI ADC bus speed 1.1MHz
+static uint32_t dacspeed = 20000000; // SPI DAC bus speed 20MHz
 
 static uint8_t adctx[] = { 0x01, 0x80, 0x00 }; // transmit buffer for the ADC
 static char adcrx[3]; // receive buffer for the adc;
@@ -40,7 +42,7 @@ int open_adc() {
 	if ((adc = open(adcdevice, O_RDWR)) < 0)
 		return (0);
 
-	if (ioctl(adc, SPI_IOC_WR_MAX_SPEED_HZ, &speed) == -1)
+	if (ioctl(adc, SPI_IOC_WR_MAX_SPEED_HZ, &adcspeed) == -1)
 		return (0);
 	// Set SPI mode
 	if (ioctl(adc, SPI_IOC_WR_MODE, &mode) == -1)
@@ -66,7 +68,7 @@ int open_dac() {
 	if ((dac = open(dacdevice, O_RDWR)) < 0)
 		return (0);
 
-	if (ioctl(dac, SPI_IOC_WR_MAX_SPEED_HZ, &speed) == -1)
+	if (ioctl(dac, SPI_IOC_WR_MAX_SPEED_HZ, &dacspeed) == -1)
 		return (0);
 	// Set SPI mode
 	if (ioctl(dac, SPI_IOC_WR_MODE, &mode) == -1)
@@ -112,7 +114,7 @@ int read_adc_raw(int channel, int mode) {
 	}
 
 	struct spi_ioc_transfer tr = { .tx_buf = (uintptr_t) adctx, .rx_buf =
-			(uintptr_t) adcrx, .len = 3, .delay_usecs = 0, .speed_hz = speed,
+			(uintptr_t) adcrx, .len = 3, .delay_usecs = 0, .speed_hz = adcspeed,
 			.bits_per_word = 8, };
 
 	if (ioctl(adc, SPI_IOC_MESSAGE(1), &tr) == -1){
@@ -162,7 +164,7 @@ void set_dac_raw(uint16_t raw, int channel) {
     }
 
 	struct spi_ioc_transfer tr = { .tx_buf = (unsigned long) &dactx, .rx_buf =
-			(unsigned long) NULL, .len = 2, .delay_usecs = 0, .speed_hz = speed,
+			(unsigned long) NULL, .len = 2, .delay_usecs = 0, .speed_hz = dacspeed,
 			.bits_per_word = 8, .cs_change = 0, };
 
 	// Write data
