@@ -1,11 +1,11 @@
 /*
  ================================================
  ABElectronics UK Servo Pi 16-Channel PWM Servo Controller
- Version 1.0 Created 27/03/2016
+ See CHANGELOG.md for version number
  ================================================
 
 
- Required package{
+ Required package: libi2c-dev
  apt-get install libi2c-dev
  */
 
@@ -47,15 +47,15 @@
 #define DIRECTION_MAX 35
 
 static int i2cbus;
-const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
-unsigned char buf[10] = { 0 };
+static const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
+static uint8_t buf[10] = { 0 };
 
 // Output enable pin.  Change this if you connect the GPIO pin to something other than 4
 #define ENABLE_PIN 4
 
 // private methods
 
-static int read_byte_data(char address, char reg) {
+static int read_byte_data(uint8_t address, uint8_t reg) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for read %s \n", strerror(errno));
@@ -85,7 +85,7 @@ static int read_byte_data(char address, char reg) {
 	return (buf[0]);
 }
 
-static void write_byte_data(char address, char reg, char value) {
+static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
 		exit(1);
@@ -170,7 +170,7 @@ static int gpio_write(int pin, int value) {
 
 // public methods
 
-int servopi_init(char address, char use_oe_pin) {
+int servopi_init(uint8_t address, uint8_t use_oe_pin) {
 	/**
 	* Initialise the Servo Pi - run before calling any other methods
 	* @param address - I2C address
@@ -198,7 +198,7 @@ int servopi_init(char address, char use_oe_pin) {
 
 }
 
-void set_pwm_freq(double freq, char address) {
+void set_pwm_freq(double freq, uint8_t address) {
 	/**
 	* Set the PWM frequency
 	* @param freq - required frequency
@@ -209,9 +209,9 @@ void set_pwm_freq(double freq, char address) {
 	scaleval /= 4096.0; // 12-bit
 	scaleval /= freq;
 	scaleval -= 1.0;
-	char prescale = (char) floor(scaleval + 0.5);
-	char oldmode = read_byte_data(address, MODE1);
-	char newmode = (oldmode & 0x7F) | 0x10;
+	uint8_t prescale = (uint8_t) floor(scaleval + 0.5);
+	uint8_t oldmode = read_byte_data(address, MODE1);
+	uint8_t newmode = (oldmode & 0x7F) | 0x10;
 
 	write_byte_data(address, MODE1, newmode);
 	write_byte_data(address, PRE_SCALE, prescale);
@@ -221,7 +221,7 @@ void set_pwm_freq(double freq, char address) {
 
 }
 
-void set_pwm(char channel, int on, int off, char address) {
+void set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address) {
 	/**
 	* Set the output on single channels
 	* @param channel - 1 to 16
@@ -237,7 +237,7 @@ void set_pwm(char channel, int on, int off, char address) {
 
 }
 
-void set_all_pwm(int on, int off, char address) {
+void set_all_pwm(uint16_t on, uint16_t off, uint8_t address) {
 	/**
 	* Set the output on all channels
 	* @param on - time period 0 to 4096
@@ -275,36 +275,37 @@ int output_enable() {
 
 }
 
-void set_allcall_address(char allcalladdress, char address) {
+void set_allcall_address(uint8_t allcalladdress, uint8_t address) {
 	/**
 	* Set the I2C address for the All Call function
-	* @param allcalladdress - I2C address
+	* @param allcalladdress - New I2C All Call address
+	* @param address - I2C address
 	*/
-	char oldmode = read_byte_data(address, MODE1);
-	char newmode = oldmode | (1 << 0);
+	uint8_t oldmode = read_byte_data(address, MODE1);
+	uint8_t newmode = oldmode | (1 << 0);
 	write_byte_data(address, MODE1, newmode);
 	write_byte_data(address, ALLCALLADR, allcalladdress << 1);
 
 }
 
-void enable_allcall_address(char address) {
+void enable_allcall_address(uint8_t address) {
 	/**
 	* Enable the I2C address for the All Call function
 	* @param address - I2C address
 	*/
-	char oldmode = read_byte_data(address, MODE1);
-	char newmode = oldmode | (1 << 0);
+	uint8_t oldmode = read_byte_data(address, MODE1);
+	uint8_t newmode = oldmode | (1 << 0);
 	write_byte_data(address, MODE1, newmode);
 
 }
 
-void disable_allcall_address(char address) {
+void disable_allcall_address(uint8_t address) {
 	/**
 	* Disable the I2C address for the All Call function
 	* @param address - I2C address
 	*/
-	char oldmode = read_byte_data(address, MODE1);
-	char newmode = oldmode & ~(1 << 0);
+	uint8_t oldmode = read_byte_data(address, MODE1);
+	uint8_t newmode = oldmode & ~(1 << 0);
 	write_byte_data(address, MODE1, newmode);
 }
 

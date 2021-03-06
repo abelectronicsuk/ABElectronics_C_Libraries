@@ -1,12 +1,13 @@
 /*
-================================================
-ABElectronics UK ADC Servo Pi 16 Channel PWM controller
-Version 1.0 Created 11/01/2016
-================================================
+ ================================================
+ ABElectronics UK Servo Pi 16-Channel PWM Servo Controller
+ See CHANGELOG.md for version number
+ ================================================
 
-Required package{
-apt-get install libi2c-dev
-*/
+
+ Required package: libi2c-dev
+ apt-get install libi2c-dev
+ */
 
 
 /**
@@ -15,7 +16,7 @@ apt-get install libi2c-dev
 * @param use_oe_pin - Enable the Output Enable pin on the GPIO port
 * @returns - 0 = OK, 1 = GPIO enable failed, 2 = GPIO direction set failed
 */
-int servopi_init(char address, char use_oe_pin);
+int servopi_init(uint8_t address, uint8_t use_oe_pin);
 
 
 /**
@@ -23,7 +24,7 @@ int servopi_init(char address, char use_oe_pin);
 * @param freq - required frequency
 * @param address - I2C address
 */
-void set_pwm_freq(double freq, char address);
+void set_pwm_freq(double freq, uint8_t address);
 
 /**
 * Set the output on single channels
@@ -32,7 +33,7 @@ void set_pwm_freq(double freq, char address);
 * @param off - time period 0 to 4096
 * @param address - I2C address
 */
-void set_pwm(char channel, int on, int off, char address);
+void set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address);
 
 /**
 * Set the output on all channels
@@ -40,7 +41,7 @@ void set_pwm(char channel, int on, int off, char address);
 * @param off - time period 0 to 4096
 * @param address - I2C address
 */
-void set_all_pwm(int on, int off, char address);
+void set_all_pwm(uint16_t on, uint16_t off, uint8_t address);
 
 /**
 * Disable the output via OE pin
@@ -56,19 +57,20 @@ int output_enable();
 
 /**
 * Set the I2C address for the All Call function
-* @param allcalladdress - I2C address
+* @param allcalladdress - New I2C All Call address
+* @param address - I2C address
 */
-void set_allcall_address(char allcalladdress, char address);
+void set_allcall_address(uint8_t allcalladdress, uint8_t address);
 
 /**
 * Enable the I2C address for the All Call function
 * @param address - I2C address
 */
-void enable_allcall_address(char address);
+void enable_allcall_address(uint8_t address);
 
 /**
 * Disable the I2C address for the All Call function
 * @param address - I2C address
 */
-void disable_allcall_address(char address);
+void disable_allcall_address(uint8_t address);
 

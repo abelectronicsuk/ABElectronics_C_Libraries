@@ -1,7 +1,7 @@
 /*
  ================================================
- ABElectronics UK ADC Pi 8-Channel Analogue to Digital Converter
- Version 1.1 Created 23/01/2015 - Updated 27/05/2015
+ AB Electronics UK ADC Pi 8-Channel Analogue to Digital Converter
+ See CHANGELOG.md for version number
  ================================================
 
  Reads from the MCP3424 ADC on the ADC Pi and ADC Pi Plus.
@@ -12,12 +12,12 @@
 
  read_voltage(address,channel,bitrate,pga,conversionmode) returns the voltage present at the ADC input
 
-
- Required package{
+ Required package: libi2c-dev
  apt-get install libi2c-dev
  */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -27,24 +27,14 @@
 #include <linux/i2c-dev.h>
 
 static int i2cbus;
-const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
-unsigned char writebuffer[10] = { 0 };
-unsigned char readbuffer[10] = { 0 };
-static char signbit = 0;
+static const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
+static uint8_t writebuffer[10] = { 0 };
+static uint8_t readbuffer[10] = { 0 };
+static uint8_t signbit = 0;
+
 // local methods
 
-static void open_i2c_bus() {
-	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for read %s \n", strerror(errno));
-		exit(1);
-	}
-}
-
-static void close_i2c_bus() {
-	close(i2cbus);
-}
-
-static void read_byte_array(char address, char reg) {
+static void read_byte_array(uint8_t address, uint8_t reg) {
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
 		printf("Failed to write to i2c port for read\n");
@@ -61,7 +51,7 @@ static void read_byte_array(char address, char reg) {
 	read(i2cbus, readbuffer, 4);
 }
 
-static char update_byte(char byte, char bit, char value) {
+static uint8_t update_byte(uint8_t byte, uint8_t bit, uint8_t value) {
 	/*
 	 internal method for setting the value of a single bit within a byte
 	 */
@@ -74,7 +64,7 @@ static char update_byte(char byte, char bit, char value) {
 
 }
 
-static char set_pga(char config, char gain) {
+static uint8_t set_pga(uint8_t config, uint8_t gain) {
 	/*
 	 internal method for Programmable Gain Amplifier gain selection
 	 */
@@ -101,7 +91,7 @@ static char set_pga(char config, char gain) {
 	return (config);
 }
 
-static char set_bit_rate(char config, char rate) {
+static uint8_t set_bit_rate(uint8_t config, uint8_t rate) {
 	/*
 	 internal method for bit rate selection
 	 */
@@ -130,7 +120,7 @@ static char set_bit_rate(char config, char rate) {
 	return (config);
 }
 
-static char set_conversion_mode(char config, char mode) {
+static uint8_t set_conversion_mode(uint8_t config, uint8_t mode) {
 	/*
 	 internal method for setting the conversion mode
 	 */
@@ -143,7 +133,7 @@ static char set_conversion_mode(char config, char mode) {
 	return (config);
 }
 
-static char set_channel(char config, char channel) {
+static uint8_t set_channel(uint8_t config, uint8_t channel) {
 	/*
 	 internal method for setting the channel
 	 */
@@ -176,17 +166,16 @@ static char set_channel(char config, char channel) {
 * @param bitrate - 12, 14, 16 or 18
 * @param pga - 1, 2, 4 or 8
 * @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
-* @returns - raw long value from ADC buffer
+* @returns - uint32_t value from ADC buffer
 */
-int read_raw(char address, char channel, int bitrate, int pga,
-		char conversionmode) {
+uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode) {
 	// variables for storing the raw bytes from the ADC
-	char h = 0;
-	char l = 0;
-	char m = 0;
-	char s = 0;
-	char config = 0x9C;
-	long t = 0;
+	uint8_t h = 0;
+	uint8_t l = 0;
+	uint8_t m = 0;
+	uint8_t s = 0;
+	uint8_t config = 0x9C;
+	uint32_t t = 0;
 	signbit = 0;
 
 	// set the config based on the provided parameters
@@ -196,10 +185,14 @@ int read_raw(char address, char channel, int bitrate, int pga,
 	config = set_pga(config, pga);
 
 	// keep reading the ADC data until the conversion result is ready
-	int timeout = 1000; // number of reads before a timeout occurs
-	int x = 0;
+	uint32_t timeout = 1000; // number of reads before a timeout occurs
+	uint32_t x = 0;
 
-	open_i2c_bus();
+	// open the i2c bus
+	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
+		printf("Failed to open i2c port for read %s \n", strerror(errno));
+		exit(1);
+	}
 
 	do {
 		if (bitrate == 18) {
@@ -215,20 +208,14 @@ int read_raw(char address, char channel, int bitrate, int pga,
 			s = readbuffer[2];
 		}
 
-		// check bit 7 of s to see if the conversion result is ready
-		if (!(s & (1 << 7))) {
-			break;
-		}
+		if (!(s & (1 << 7))) break; // check bit 7 of s to see if the conversion result is ready
 
-		if (x > timeout) {
-			// timeout occurred
-			return (0);
-		}
+		if (x > timeout) return (0); // timeout occurred
 
 		x++;
 	} while (1);
 
-	close_i2c_bus();
+	close(i2cbus);
 
 	// extract the returned bytes and combine in the correct order
 	switch (bitrate) {
@@ -276,12 +263,12 @@ int read_raw(char address, char channel, int bitrate, int pga,
 * @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
 * @returns - double voltage value from ADC
 */
-double read_voltage(char address, char channel, int bitrate, int pga,
-		char conversionmode) {
-	int raw = read_raw(address, channel, bitrate, pga, conversionmode); // get the raw value
+double read_voltage(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode) {
+	uint32_t raw = read_raw(address, channel, bitrate, pga, conversionmode); // get the raw value
 
 	// calculate the gain based on the pga value
 	double gain = (double) pga / 2;
+	double offset = 2.048 / (double) pga;
 
 	// set the lsb value based on the bitrate
 	double lsb = 0;

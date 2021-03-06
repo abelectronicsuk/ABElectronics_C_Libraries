@@ -1,19 +1,18 @@
 /*
  ================================================
- ABElectronics UK ADC Differential Pi 8-Channel Analogue to Digital Converter
- Version 1.0 Created 11/01/2016
+ AB Electronics UK ADC Differential Pi 8-Channel Analogue to Digital Converter
+ See CHANGELOG.md for version number
  ================================================
 
-Reads from the MCP3424 ADC on the ADC Differential Pi and Delta-Sigma Pi.
+ Reads from the MCP3424 ADC on the ADC Differential Pi and Delta-Sigma Pi.
 
-Two functions are available to use.
+ Two functions are available to use.
 
-read_raw(address,channel,bitrate,pga,conversionmode) returns the raw number from the ADC
+ read_raw(address,channel,bitrate,pga,conversionmode) returns the raw number from the ADC
 
-read_voltage(address,channel,bitrate,pga,conversionmode) returns the voltage present at the ADC input
+ read_voltage(address,channel,bitrate,pga,conversionmode) returns the voltage present at the ADC input
 
-
- Required package{
+ Required package: libi2c-dev
  apt-get install libi2c-dev
  */
 
@@ -27,10 +26,10 @@ read_voltage(address,channel,bitrate,pga,conversionmode) returns the voltage pre
 * @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
 * @returns - raw long value from ADC buffer
 */
-long read_raw(char address, char channel, int bitrate, int pga,	char conversionmode);
+uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga,	uint8_t conversionmode);
 
 /**
-* Returns the voltage from the selected ADC channel
+* Reads the voltage from the selected ADC channel
 * @param address - I2C address for the target device e.g. 0x68
 * @param channel - 1 to 4
 * @param bitrate - 12, 14, 16 or 18
@@ -38,6 +37,6 @@ long read_raw(char address, char channel, int bitrate, int pga,	char conversionm
 * @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
 * @returns - double voltage value from ADC
 */
-double read_voltage(char address, char channel, int bitrate, int pga, char conversionmode);
+double read_voltage(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode);
 
 

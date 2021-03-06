@@ -1,14 +1,14 @@
 /*
  ================================================
  ABElectronics UK I2C Switch
- Version 1.0 Created 08/11/2019
+ See CHANGELOG.md for version number
  ================================================
 
 
  The PCA9546A I2C switch contains 4 channels.  Each channel can be
  switched on or off independently.
 
- Required package{
+ Required package: libi2c-dev
  sudo apt-get install libi2c-dev
  */
 
@@ -37,10 +37,10 @@
 // local methods
 
 static int i2cbus;
-const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
-unsigned char buf[10] = { 0 };
+static const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
+static uint8_t buf[10] = { 0 };
 
-int read_byte_data(char address) {
+static uint8_t read_byte_data(uint8_t address) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for read %s \n", strerror(errno));
@@ -62,7 +62,7 @@ int read_byte_data(char address) {
 	return (buf[0]);
 }
 
-void write_byte_data(char address, char value) {
+static void write_byte_data(uint8_t address, uint8_t value) {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
 		exit(1);
@@ -83,7 +83,7 @@ void write_byte_data(char address, char value) {
 	close(i2cbus);
 }
 
-static char updatebyte(char byte, char bit, char value) {
+static uint8_t updatebyte(uint8_t byte, uint8_t bit, uint8_t value) {
 	/*
 	 internal method for setting the value of a single bit within a byte
 	 */
@@ -96,7 +96,7 @@ static char updatebyte(char byte, char bit, char value) {
 
 }
 
-static char checkbit(char byte, char bit) {
+static uint8_t checkbit(uint8_t byte, uint8_t bit) {
 	/*
 	 internal method for reading the value of a single bit within a byte
 	 */
@@ -170,7 +170,7 @@ static int gpio_write(int pin, int value) {
 
 // public methods
 
-char switch_channel(char address, char channel) {
+char switch_channel(uint8_t address, uint8_t channel) {
 	/**
 	* Enable the specified I2C channel and disable other channels
 	* @param address - I2C address for the target device. Default = 0x70
@@ -191,7 +191,7 @@ char switch_channel(char address, char channel) {
 	return(0);
 }
 
-char set_channel_state(char address, char channel, char state) {
+char set_channel_state(uint8_t address, uint8_t channel, uint8_t state) {
 	/**
 	* Sets the state of the specified I2C channel.
 	* All other channels keep their existing state.
@@ -218,7 +218,7 @@ char set_channel_state(char address, char channel, char state) {
 	return(0);
 }
 
-char get_channel_state(char address, char channel) {
+char get_channel_state(uint8_t address, uint8_t channel) {
 	/**
 	* Gets the state of the specified I2C channel
 	* @param address - I2C address for the target device. Default = 0x70

@@ -1,10 +1,10 @@
 /*
 ================================================
-ABElectronics UK RTC Pi real-time clock
-Version 1.0 Created 12/06/2017
+ AB Electronics UK RTC Pi real-time clock
+ See CHANGELOG.md for version number
 ================================================
 
-Required package{
+Required package:libi2c-dev
 apt-get install libi2c-dev
 */
 
@@ -34,18 +34,18 @@ apt-get install libi2c-dev
 #define LO_NIBBLE(b) ((b) & 0x0F)
 
 // Define local variables
-unsigned char rtcAddress = 0x68;
-unsigned char rtcConfig = 0x03;
-unsigned int rtcCentury = 2000;
+uint8_t rtcAddress = 0x68;
+uint8_t rtcConfig = 0x03;
+uint16_t rtcCentury = 2000;
 
 static int i2cbus;
-const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
-unsigned char buf[10] = { 0 };
+static const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
+static uint8_t buf[10] = { 0 };
 
-unsigned char writebuffer[60] = { 0 };
-unsigned char readbuffer[60] = { 0 };
+static uint8_t writebuffer[60] = { 0 };
+static uint8_t readbuffer[60] = { 0 };
 
-static void read_byte_array(char address, char reg, char length) {
+static void read_byte_array(uint8_t address, uint8_t reg, uint8_t length) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for read %s \n", strerror(errno));
@@ -70,7 +70,7 @@ static void read_byte_array(char address, char reg, char length) {
 	close(i2cbus);
 }
 
-void write_byte_data(char address, char reg, char value) {
+void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	/*
 	internal method for writing data to the i2c bus
 	*/
@@ -95,7 +95,7 @@ void write_byte_data(char address, char reg, char value) {
 	close(i2cbus);
 }
 
-void write_byte_array(unsigned char address, unsigned char buffer[], unsigned char length) {
+void write_byte_array(uint8_t address, uint8_t buffer[], uint8_t length) {
 	/*
 	internal method for writing data to the i2c bus
 	*/
@@ -117,22 +117,22 @@ void write_byte_array(unsigned char address, unsigned char buffer[], unsigned ch
 	close(i2cbus);
 }
 
-static unsigned char bcd_to_dec(unsigned char bcd) {
+static uint8_t bcd_to_dec(uint8_t bcd) {
 	/*
 	internal method for converting a bcd formatted number to decimal
 	*/
 
-	return (unsigned char)((HI_NIBBLE(bcd) * 10) + (LO_NIBBLE(bcd)));
+	return (uint8_t)((HI_NIBBLE(bcd) * 10) + (LO_NIBBLE(bcd)));
 }
 
-static unsigned char dec_to_bcd(char dec) {
+static uint8_t dec_to_bcd(char dec) {
 	/*
 	internal method for converting a decimal formatted number to bcd
 	*/
-	return (unsigned char)((dec / 10) * 16) + (dec % 10);
+	return (uint8_t)((dec / 10) * 16) + (dec % 10);
 }
 
-static char updatebyte(char byte, char bit, char value) {
+static uint8_t updatebyte(uint8_t byte, uint8_t bit, uint8_t value) {
 	/*
 	internal method for setting the value of a single bit within a byte
 	*/
@@ -200,7 +200,7 @@ void rtc_disable_output() {
 	write_byte_data(rtcAddress, CONTROL, rtcConfig);
 }
 
-void rtc_set_frequency(unsigned char frequency) {
+void rtc_set_frequency(uint8_t frequency) {
 	/**
 	* Set the squarewave output frequency
 	* @param - 1 = 1Hz, 2 = 4.096KHz, 3 = 8.192KHz, 4 = 32.768KHz
@@ -232,7 +232,7 @@ void rtc_set_frequency(unsigned char frequency) {
 	}
 }
 
-void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
+void rtc_write_memory(uint8_t address, uint8_t *valuearray) {
 	/**
 	* write to the memory on the ds1307
 	* the ds1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes
@@ -243,9 +243,9 @@ void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 	if (address >= 0x08 && address <= 0x3F) {
 		if (address + sizeof(valuearray) <= 0x3F) {
 
-			int length = sizeof(valuearray);
+			uint8_t length = sizeof(valuearray);
 
-			unsigned char *writearray = malloc(length + 1);
+			uint8_t *writearray = malloc(length + 1);
 
 			if (errno == ENOMEM) { // Fail!!!!
 				free(writearray);
@@ -260,7 +260,7 @@ void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 					writearray[a + 1] = valuearray[a];
 				}
 
-				write_byte_array(rtcAddress, writearray, (unsigned char)length + 1);
+				write_byte_array(rtcAddress, writearray, (uint8_t)length + 1);
 
 				free(writearray);
 			}
@@ -275,12 +275,12 @@ void rtc_write_memory(unsigned char address, unsigned char *valuearray) {
 	}
 }
 
-unsigned char *rtc_read_memory(unsigned char address, int length) {
+uint8_t *rtc_read_memory(uint8_t address, uint8_t length) {
 	/**
 	* read from the memory on the ds1307
 	* the ds1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
 	* @param address - 0x08 to 0x3F
-	* @param length - up to 32 bytes.  length can not exceed the avaiable address space.
+	* @param length - up to 32 bytes.  length can not exceed the available address space.
 	* @returns - pointer to a byte array where the data will be saved
 	*/
 
@@ -288,7 +288,7 @@ unsigned char *rtc_read_memory(unsigned char address, int length) {
 		if (address <= (0x3F - length)) {
 			//write_i2c_block_data(_rtcAddress, address, valuearray);
 
-			unsigned char *writearray = malloc(length);
+			uint8_t *writearray = malloc(length);
 
 			if (errno == ENOMEM) { // Fail!!!!
 				free(writearray);
@@ -299,7 +299,7 @@ unsigned char *rtc_read_memory(unsigned char address, int length) {
 				read_byte_array(rtcAddress, address, length); // read the values from the SRAM into the read buffer
 
 				// copy the read buffer into the writearray
-				int i = 0;
+				uint8_t i = 0;
 				for (i = 0; i < length; i++) {
 					writearray[i] = readbuffer[i];
 				}

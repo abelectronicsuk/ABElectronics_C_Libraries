@@ -1,10 +1,11 @@
 /*
 ================================================
-ABElectronics UK ADC-DAC Pi
-Version 1.1 Update 08/09/2020
+AB Electronics UK ADCDAC Pi Analogue to Digital / Digital to Analogue Converter
 
+Based on the Microchip MCP3202 and MCP4822
+
+See CHANGELOG.md for version number
 ================================================
-
 */
 
 #include <stdint.h>
@@ -23,19 +24,19 @@ static uint32_t adcspeed = 1100000; // SPI ADC bus speed 1.1MHz
 static uint32_t dacspeed = 20000000; // SPI DAC bus speed 20MHz
 
 static uint8_t adctx[] = { 0x01, 0x80, 0x00 }; // transmit buffer for the ADC
-static char adcrx[3]; // receive buffer for the adc;
+static uint8_t adcrx[3]; // receive buffer for the adc;
 static uint8_t dactx[2];
 static int adc; // adc object
 static int dac; // dac object
 
 static double adcrefvoltage = 3.3; // reference voltage for the ADC chip.
-static int dacgain = 1; // gain setting for the DAC chip.
+static uint8_t dacgain = 1; // gain setting for the DAC chip.
 static double dacvoltage = 2.048; // maximum voltage for the DAC output
 
 int open_adc() {
 	/**
 	* Open the ADC SPI bus channel
-	* This needs to be called before using the DAC
+	* This needs to be called before using the ADC
 	*/
 
 	// Open SPI device
@@ -51,11 +52,11 @@ int open_adc() {
 	return (1);
 }
 
-void close_adc() {
+int close_adc() {
 	/**
 	* Close the ADC SPI bus channel
 	*/
-	close(adc);
+	return close(adc);
 }
 
 int open_dac() {
@@ -77,17 +78,17 @@ int open_dac() {
 	return (1);
 }
 
-void close_dac() {
+int close_dac() {
 	/**
 	* Close the DAC SPI bus channel
 	*/
-	close(dac);
+	return close(dac);
 }
 
-int read_adc_raw(int channel, int mode) {
+uint16_t read_adc_raw(uint8_t channel, uint8_t mode) {
 	/**
 	* Read the raw value from the ADC
-	* @param channel -  1 to 8
+	* @param channel -  1 or 2
 	* @param mode -  0 = Single Ended or 1 = Differential
 	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
 	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
@@ -125,7 +126,7 @@ int read_adc_raw(int channel, int mode) {
 
 }
 
-double read_adc_voltage(int channel, int mode) {
+double read_adc_voltage(uint8_t channel, uint8_t mode) {
 	/**
 	* Read the voltage from the ADC
 	* @param channel - 1 or 2
@@ -135,7 +136,7 @@ double read_adc_voltage(int channel, int mode) {
 	* @returns between 0V and the reference voltage
 	*/
 
-	int rawval = read_adc_raw(channel, mode);
+	uint16_t rawval = read_adc_raw(channel, mode);
 	return ((adcrefvoltage / 4096) * (double) rawval);
 }
 
@@ -147,7 +148,7 @@ void set_adc_refvoltage(double ref) {
 	adcrefvoltage = ref;
 }
 
-void set_dac_raw(uint16_t raw, int channel) {
+void set_dac_raw(uint16_t raw, uint8_t channel) {
 	/**
 	* Set the raw value from the selected channel on the DAC
 	* @param raw - between 0 and 4095
@@ -163,8 +164,8 @@ void set_dac_raw(uint16_t raw, int channel) {
 		dactx[0] = (x &= ~(1 << 5));
     }
 
-	struct spi_ioc_transfer tr = { .tx_buf = (unsigned long) &dactx, .rx_buf =
-			(unsigned long) NULL, .len = 2, .delay_usecs = 0, .speed_hz = dacspeed,
+	struct spi_ioc_transfer tr = { .tx_buf = (uint32_t) &dactx, .rx_buf =
+			(uint32_t) NULL, .len = 2, .delay_usecs = 0, .speed_hz = dacspeed,
 			.bits_per_word = 8, .cs_change = 0, };
 
 	// Write data
@@ -173,7 +174,7 @@ void set_dac_raw(uint16_t raw, int channel) {
 	}
 }
 
-void set_dac_voltage(double voltage, int channel) {
+void set_dac_voltage(double voltage, uint8_t channel) {
 	/**
 	* Set the DAC voltage
 	* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 3.3 when gain is set to 2
@@ -194,7 +195,7 @@ void set_dac_voltage(double voltage, int channel) {
 	}
 }
 
-void set_dac_gain(int gain) {
+void set_dac_gain(uint8_t gain) {
 	/**
 	* Set the DAC gain
 	* @param gain - 1 or 2 - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 3.3V when gain is set to 2
