@@ -16,7 +16,7 @@ This library reads ADC inputs and writes to DAC outputs on the [ADC-DAC Pi Zero]
 This library reads input values from the [ADC Differential Pi](https://www.abelectronics.co.uk/p/65/adc-differential-pi-raspberry-pi-analogue-to-digital-converter "ADC Differential Pi").
 
 ### ADC Pi
-This library reads input values from the [ADC Pi](https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter "ADC Pi") "ADC Pi").
+This library reads input values from the [ADC Pi](https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter "ADC Pi").
 
 ### Expander Pi
 This library controls all of the functions on the [Expander Pi](https://www.abelectronics.co.uk/p/50/expander-pi "Expander Pi")
