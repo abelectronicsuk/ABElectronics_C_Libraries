@@ -1,6 +1,11 @@
 
 # AB Electronics UK: C Libraries - Change Log
 
+## 2022-04-23 Andrew Dorey  
+
+* 1.3.1 Added library for the new IO Zero 32 expansion board.
+
+
 ## 2021-02-25 Andrew Dorey  
 
 * 1.3.0 Major Update.
