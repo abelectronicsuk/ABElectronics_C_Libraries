@@ -1,7 +1,7 @@
 /*
 ================================================
  AB Electronics UK RTC Pi real-time clock
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
 ================================================
 
 Required package:libi2c-dev
@@ -20,7 +20,7 @@ apt-get install libi2c-dev
 #include <linux/i2c-dev.h>
 #include <time.h> 
 
-// Define registers values from datasheet
+// Define registers values from the datasheet
 #define SECONDS 0x00
 #define MINUTES 0x01
 #define HOURS 0x02
@@ -72,7 +72,7 @@ static void read_byte_array(uint8_t address, uint8_t reg, uint8_t length) {
 
 void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	/*
-	internal method for writing data to the i2c bus
+	Internal method for writing data to the i2c bus
 	*/
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
@@ -97,7 +97,7 @@ void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 
 void write_byte_array(uint8_t address, uint8_t buffer[], uint8_t length) {
 	/*
-	internal method for writing data to the i2c bus
+	Internal method for writing data to the i2c bus
 	*/
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
@@ -119,7 +119,7 @@ void write_byte_array(uint8_t address, uint8_t buffer[], uint8_t length) {
 
 static uint8_t bcd_to_dec(uint8_t bcd) {
 	/*
-	internal method for converting a bcd formatted number to decimal
+	Internal method for converting a BCD formatted number to decimal
 	*/
 
 	return (uint8_t)((HI_NIBBLE(bcd) * 10) + (LO_NIBBLE(bcd)));
@@ -127,14 +127,14 @@ static uint8_t bcd_to_dec(uint8_t bcd) {
 
 static uint8_t dec_to_bcd(char dec) {
 	/*
-	internal method for converting a decimal formatted number to bcd
+	Internal method for converting a decimal formatted number to BCD
 	*/
 	return (uint8_t)((dec / 10) * 16) + (dec % 10);
 }
 
 static uint8_t updatebyte(uint8_t byte, uint8_t bit, uint8_t value) {
 	/*
-	internal method for setting the value of a single bit within a byte
+	Internal method for setting the value of a single bit within a byte
 	*/
 	if (value == 0) {
 		return (byte &= ~(1 << bit));
@@ -149,7 +149,7 @@ static uint8_t updatebyte(uint8_t byte, uint8_t bit, uint8_t value) {
 void rtc_set_date(struct tm date) {
 	/**
 	* Set the date on the RTC
-	* @param - date - struct tm formated date and time
+	* @param - date - struct tm formatted date and time
 	*/
 	writebuffer[0] = SECONDS; // register address for seconds
 	writebuffer[1] = dec_to_bcd(date.tm_sec); // seconds
@@ -234,8 +234,8 @@ void rtc_set_frequency(uint8_t frequency) {
 
 void rtc_write_memory(uint8_t address, uint8_t *valuearray) {
 	/**
-	* write to the memory on the ds1307
-	* the ds1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes
+	* Write to the memory on the DS1307
+	* The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes
 	* @param address - 0x08 to 0x3F
 	* @param valuearray - byte array containing data to be written to memory
 	*/
@@ -277,10 +277,10 @@ void rtc_write_memory(uint8_t address, uint8_t *valuearray) {
 
 uint8_t *rtc_read_memory(uint8_t address, uint8_t length) {
 	/**
-	* read from the memory on the ds1307
-	* the ds1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
+	* Read from the memory on the DS1307
+	* The DS1307 contains a 56-Byte, battery-backed RAM with unlimited writes
 	* @param address - 0x08 to 0x3F
-	* @param length - up to 32 bytes.  length can not exceed the available address space.
+	* @param length - up to 32 bytes. length can not exceed the available address space.
 	* @returns - pointer to a byte array where the data will be saved
 	*/
 

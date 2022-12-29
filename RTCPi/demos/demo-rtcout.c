@@ -6,7 +6,7 @@
 *      compile with "gcc ../ABE_RTCPi.c demo-rtcout.c -o demo-rtcout"
 *      run with "./demo-rtcout"
 *
-*  This demo shows how to enable the clock square wave output on the RTC Pi and set the frequency
+*  This demo shows how to enable the clock square-wave output on the RTC Pi and set the frequency
 */
 
 #include <stdio.h>

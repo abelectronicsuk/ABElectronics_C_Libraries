@@ -1,7 +1,7 @@
 /*
  ================================================
- AB Electronics UK IO Zero 32 : 32-Channel Port Expander
- See CHANGELOG.md for version number
+ AB Electronics UK IO Zero 32: 32-Channel Port Expander
+ See CHANGELOG.md for the version number
  ================================================
 
  32-Channel Port Expander based on the PCA9535.
@@ -17,7 +17,7 @@
 // public functions
 
 /**
-* set IO direction for an individual pin
+* Set the IO direction for an individual pin
 * @param address - I2C address for the target device
 * @param pins - 1 to 16
 * @param direction - 1 = input, 0 = output
@@ -25,7 +25,7 @@
 void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction);
 
 /**
-* Get IO direction for an individual pin
+* Get the IO direction for an individual pin
 * @param address - I2C address for the target device
 * @param pins - 1 to 16
 * @returns 1 = input, 0 = output
@@ -33,7 +33,7 @@ void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction);
 uint8_t get_pin_direction(uint8_t address, uint8_t pin);
 
 /**
-* set direction for an IO port
+* Set the direction for an IO port
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @param direction - 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -41,7 +41,7 @@ uint8_t get_pin_direction(uint8_t address, uint8_t pin);
 void set_port_direction(uint8_t address, uint8_t port, uint8_t direction);
 
 /**
-* get direction for an IO port
+* Get the direction for an IO port
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -49,21 +49,21 @@ void set_port_direction(uint8_t address, uint8_t port, uint8_t direction);
 uint8_t get_port_direction(uint8_t address, uint8_t port);
 
 /**
-* set direction for the IO bus
+* Set the direction for the IO bus
 * @param address - I2C address for the target device
 * @param direction - 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 */
 void set_bus_direction(uint8_t address, uint16_t direction);
 
 /**
-* get direction for the IO bus
+* Get the direction for the IO bus
 * @param address - I2C address for the target device
 * @returns 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 */
 uint16_t get_bus_direction(uint8_t address);
 
 /**
-* write to an individual pin 1 - 16
+* Write to an individual pin 1 - 16
 * @param address - I2C address for the target device
 * @param pin - 1 to 16
 * @param value - 0 = logic low, 1 = logic high
@@ -71,7 +71,7 @@ uint16_t get_bus_direction(uint8_t address);
 void write_pin(uint8_t address, uint8_t pin, uint8_t value);
 
 /**
-* write to all pins on the selected port
+* Write to all pins on the selected port
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @param value - 0 to 255 (0xFF)
@@ -79,14 +79,14 @@ void write_pin(uint8_t address, uint8_t pin, uint8_t value);
 void write_port(uint8_t address, uint8_t port, uint8_t value);
 
 /**
-* write to all pins on the selected bus
+* Write to all pins on the selected bus
 * @param address - I2C address for the target device
 * @param value - 0 to 65535 (0xFFFF). For each bit 1 = logic high, 0 = logic low
 */
 void write_bus(uint8_t address, uint16_t value);
 
 /**
-* read the value of an individual pin
+* Read the value of an individual pin
 * @param address - I2C address for the target device
 * @param pin - 1 to 16
 * @returns - 0 = logic low, 1 = logic high
@@ -94,7 +94,7 @@ void write_bus(uint8_t address, uint16_t value);
 uint8_t read_pin(uint8_t address, uint8_t pin);
 
 /**
-* read all pins on the selected port
+* Read all pins on the selected port
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns - 0 to 255 (0xFF). For each bit 1 = logic high, 0 = logic low
@@ -102,14 +102,14 @@ uint8_t read_pin(uint8_t address, uint8_t pin);
 uint8_t read_port(uint8_t address, uint8_t port);
 
 /**
-* read all pins on the selected bus
+* Read all pins on the selected bus
 * @param address - I2C address for the target device
 * @returns - 0 to 65535 (0xFFFF). For each bit 1 = logic high, 0 = logic low
 */
 uint16_t read_bus(uint8_t address);
 
 /**
-* set the polarity of the selected pin
+* Set the polarity of the selected pin
 * @param address - I2C address for the target device
 * @param pin - 1 to 16
 * @param polarity - 0 = non-inverted, 1 = inverted
@@ -117,7 +117,7 @@ uint16_t read_bus(uint8_t address);
 void set_pin_polarity(uint8_t address, uint8_t pin, uint8_t polarity);
 
 /**
-* get the polarity of the selected pin
+* Get the polarity of the selected pin
 * @param address - I2C address for the target device
 * @param pin - 1 to 16
 * @returns - pin polarity 0 = non-inverted, 1 = inverted
@@ -125,7 +125,7 @@ void set_pin_polarity(uint8_t address, uint8_t pin, uint8_t polarity);
 uint8_t get_pin_polarity(uint8_t address, uint8_t pin);
 
 /**
-* set the polarity of the pins on a selected port
+* Set the polarity of the pins on a selected port
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @param polarity - 0 to 255 (0xFF). For each bit 0 = non-inverted, 1 = inverted
@@ -133,7 +133,7 @@ uint8_t get_pin_polarity(uint8_t address, uint8_t pin);
 void set_port_polarity(uint8_t address, uint8_t port, uint8_t polarity);
 
 /**
-* get the polarity of the selected pin
+* Get the polarity of the selected pin
 * @param address - I2C address for the target device
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns - 0 to 255 (0xFF). For each bit 0 = non-inverted, 1 = inverted
@@ -141,14 +141,14 @@ void set_port_polarity(uint8_t address, uint8_t port, uint8_t polarity);
 uint8_t get_port_polarity(uint8_t address, uint8_t port);
 
 /**
-* set the polarity of the pins on a selected bus
+* Set the polarity of the pins on a selected bus
 * @param address - I2C address for the target device
 * @param polarity - 0 to 65535 (0xFFFF). For each bit 0 = non-inverted, 1 = inverted
 */
 void set_bus_polarity(uint8_t address, uint16_t polarity);
 
 /**
-* get the polarity of the bus
+* Get the polarity of the bus
 * @param address - I2C address for the target device
 * @returns - 0 to 65535 (0xFFFF). For each bit 0 = non-inverted, 1 = inverted
 */

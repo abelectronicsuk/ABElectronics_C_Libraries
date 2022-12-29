@@ -1,7 +1,7 @@
 /*
  ================================================
- ABElectronics UK Servo Pi 16-Channel PWM Servo Controller
- See CHANGELOG.md for version number
+ AB Electronics UK Servo Pi 16-Channel PWM Servo Controller
+ See CHANGELOG.md for the version number
  ================================================
 
 
@@ -20,7 +20,7 @@
 #include <linux/i2c-dev.h>
 #include <math.h>
 
-// Define registers values from datasheet
+// Define registers values from the datasheet
 #define MODE1 0x00
 #define MODE2 0x01
 #define SUBADR1 0x02
@@ -37,7 +37,7 @@
 #define ALL_LED_OFF_H 0xFD
 #define PRE_SCALE 0xFE
 
-// values used for I2C and GPIO communication
+// Values used for I2C and GPIO communication
 #define OUT 1
 #define IN  0
 #define LOW  0
@@ -47,13 +47,13 @@
 #define DIRECTION_MAX 35
 
 static int i2cbus;
-static const char *fileName = "/dev/i2c-1"; // change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
+static const char *fileName = "/dev/i2c-1"; // Change to /dev/i2c-0 if you are using a revision 0002 or 0003 model B
 static uint8_t buf[10] = { 0 };
 
 // Output enable pin.  Change this if you connect the GPIO pin to something other than 4
 #define ENABLE_PIN 4
 
-// private methods
+// Private methods
 
 static int read_byte_data(uint8_t address, uint8_t reg) {
 
@@ -168,7 +168,7 @@ static int gpio_write(int pin, int value) {
 	return(0);
 }
 
-// public methods
+// Public methods
 
 int servopi_init(uint8_t address, uint8_t use_oe_pin) {
 	/**
@@ -179,7 +179,7 @@ int servopi_init(uint8_t address, uint8_t use_oe_pin) {
 	*/
 	write_byte_data(address, MODE1, 0x00);
 
-	// set the gpio pin as an output for the Output Enable Pin if use_oe_pin = 1
+	// set the GPIO pin as an output for the Output Enable Pin if use_oe_pin = 1
 
 	if (use_oe_pin == 1){
 		//Enable GPIO pins
@@ -225,8 +225,8 @@ void set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address) {
 	/**
 	* Set the output on single channels
 	* @param channel - 1 to 16
-	* @param on - time period 0 to 4096
-	* @param off - time period 0 to 4096
+	* @param on - period 0 to 4096
+	* @param off - period 0 to 4096
 	* @param address - I2C address
 	*/
 	channel -= 1;
@@ -240,8 +240,8 @@ void set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address) {
 void set_all_pwm(uint16_t on, uint16_t off, uint8_t address) {
 	/**
 	* Set the output on all channels
-	* @param on - time period 0 to 4096
-	* @param off - time period 0 to 4096
+	* @param on - period 0 to 4096
+	* @param off - period 0 to 4096
 	* @param address - I2C address
 	*/
 
@@ -254,7 +254,7 @@ void set_all_pwm(uint16_t on, uint16_t off, uint8_t address) {
 
 int output_disable() {
 	/**
-	* Disable the output via OE pin
+	* Disable the output via the OE pin
 	* @returns - 0 = OK, 1 = GPIO failed
 	*/
 	if (-1 == gpio_write(ENABLE_PIN, 1)) {
@@ -265,7 +265,7 @@ int output_disable() {
 
 int output_enable() {
 	/**
-	* Enable the output via OE pin
+	* Enable the output via the OE pin
 	* @returns - 0 = OK, 1 = GPIO failed
 	*/
 	if (-1 == gpio_write(ENABLE_PIN, 0)) {

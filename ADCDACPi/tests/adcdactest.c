@@ -28,9 +28,9 @@ void clearscreen ()
 int main(int argc, char **argv){
 	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
 	int passed = 1;
-	uint16_t adcraw_error = 20; // error margin for adc raw readings to allow for noise and variation in the 3.3V power rail.
+	uint16_t adcraw_error = 20; // error margin for ADC raw readings to allow for noise and variation in the 3.3V power rail.
 
-	double adcvolt_error = 0.1; // error margin for adc voltage readings to allow for noise and variation in the 3.3V power rail.
+	double adcvolt_error = 0.1; // error margin for ADC voltage readings to allow for noise and variation in the 3.3V power rail.
 
 	/* functions tested
 
@@ -79,7 +79,7 @@ int main(int argc, char **argv){
 
 	usleep(200000); // sleep 0.2 seconds
 
-	// Read the raw value from ADC channel 1 in single ended mode. Expecting 2.048V or 2542
+	// Read the raw value from ADC channel 1 in single-ended mode. Expecting 2.048V or 2542
 
 	uint16_t adcval1 = read_adc_raw(1, 0);
 	
@@ -93,7 +93,7 @@ int main(int argc, char **argv){
 		passed = 0;
 	}
 
-	// Read the raw value from ADC channel 2 in single ended mode. Expecting 1.024V or 1271
+	// Read the raw value from ADC channel 2 in single-ended mode. Expecting 1.024V or 1271
 
 	uint16_t adcval2 = read_adc_raw(2, 0);
 
@@ -116,7 +116,7 @@ int main(int argc, char **argv){
 	set_dac_voltage(1.8, 1);
 	set_dac_voltage(3.0, 2);
 
-	// Read the voltage from ADC channel 1 in single ended mode. Expecting 1.8V
+	// Read the voltage from ADC channel 1 in single-ended mode. Expecting 1.8V
 
 	double adcvolt1 = read_adc_voltage(1, 0);
 	
@@ -130,7 +130,7 @@ int main(int argc, char **argv){
 		passed = 0;
 	}
 
-	// Read the voltage from ADC channel 2 in single ended mode. Expecting 3.0V
+	// Read the voltage from ADC channel 2 in single-ended mode. Expecting 3.0V
 
 	double adcvolt2 = read_adc_voltage(2, 0);
 
@@ -160,7 +160,7 @@ int main(int argc, char **argv){
 
 	// Change the DAC voltage for channels 1 to 3.0V and 2 to 1.2V
 	// Read the differential voltage from ADC channels 1 and 2. 
-	// Measures the difference of channel 1 - channel 2
+	// Measures the difference between channel 1 - channel 2
 	//Expecting 1.8V
 
 	set_dac_voltage(1.2, 2);
@@ -176,7 +176,7 @@ int main(int argc, char **argv){
 		passed = 0;
 	}
 
-	// close the spi channels for the ADC and DAC
+	// close the SPI channels for the ADC and DAC
 
 	if (close_adc() == 0){
 		printf("close_adc(): PASSED\n");

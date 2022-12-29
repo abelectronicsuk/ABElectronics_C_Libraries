@@ -1,7 +1,7 @@
 /*
  ================================================
  AB Electronics UK ADC Differential Pi 8-Channel Analogue to Digital Converter
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
  ================================================
 
  Reads from the MCP3424 ADC on the ADC Differential Pi and Delta-Sigma Pi.
@@ -23,7 +23,7 @@
 * @param channel - 1 to 4
 * @param bitrate - 12, 14, 16 or 18
 * @param pga - 1, 2, 4 or 8
-* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @param conversionmode - 0 = one-shot conversion, 1 = continuous conversion
 * @returns - raw long value from ADC buffer
 */
 uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga,	uint8_t conversionmode);
@@ -34,7 +34,7 @@ uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga
 * @param channel - 1 to 4
 * @param bitrate - 12, 14, 16 or 18
 * @param pga - 1, 2, 4 or 8
-* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @param conversionmode - 0 = one-shot conversion, 1 = continuous conversion
 * @returns - double voltage value from ADC
 */
 double read_voltage(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode);

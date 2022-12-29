@@ -8,7 +8,7 @@ The example C programs can be found in /ABElectronics_C_Libraries/ServoPi/demos
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
@@ -45,8 +45,8 @@ set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address)
 
 Set the output on single channels  
 **Parameter:** (uint8_t) channel - 1 to 16  
-**Parameter:** (uint16_t) on - time period 0 to 4096  
-**Parameter:** (uint16_t) off - time period 0 to 4096  
+**Parameter:** (uint16_t) on - period 0 to 4096  
+**Parameter:** (uint16_t) off - period 0 to 4096  
 **Parameter:** (uint8_t) address - I2C address  
 **Returns:** null  
 ___  
@@ -56,8 +56,8 @@ set_all_pwm(uint16_t on, uint16_t off, uint8_t address)
 ```
 
 Set the output on all channels  
-**Parameter:** (uint16_t) on - time period 0 to 4096  
-**Parameter:** (uint16_t) off - time period 0 to 4096  
+**Parameter:** (uint16_t) on - period 0 to 4096  
+**Parameter:** (uint16_t) off - period 0 to 4096  
 **Parameter:** (uint8_t) address - I2C address  
 **Returns:** null  
 ___  
@@ -66,7 +66,7 @@ ___
 output_disable()
 ```
 
-Disable the output via OE pin  
+Disable the output via the OE pin  
 **Returns:** (int) 0 = OK, 1 = GPIO failed  
 ___  
 
@@ -74,7 +74,7 @@ ___
 output_enable()
 ```
 
-Enable the output via OE pin  
+Enable the output via the OE pin  
 **Returns:** (int) 0 = OK, 1 = GPIO failed  
 ___  
 

@@ -19,7 +19,7 @@ int main(int argc, char **argv){
 
 	write_bus(0x20,0x0000); // turn off all pins on the bus
 	while (1){
-		write_pin(0x20,1, 1); // turn pin 1 on and off at 1 second intervals
+		write_pin(0x20,1, 1); // turn pin 1 on and off at 1-second intervals
 		usleep(1000000);
 		write_pin(0x20,1, 0);
 		usleep(1000000);

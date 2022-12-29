@@ -8,7 +8,7 @@ The example C programs can be found in /ABElectronics_C_Libraries/ExpanderPi/dem
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
@@ -43,9 +43,9 @@ adc_read_raw(uint8_t channel, uint8_t mode)
 Read the raw value from the ADC  
 **Parameter:** (uint8_t) channel -  1 to 8  
 **Parameter:** (uint8_t) mode - 0 = Single Ended or 1 = Differential  
-When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
-When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+  
-**Returns:** (uint16_t) 12 bit value between 0 and 4096  
+When in differential mode, setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
+When in differential mode, setting channel to 2 will make IN1 = IN- and IN2 = IN+  
+**Returns:** (uint16_t) 12-bit value between 0 and 4096  
 ___  
 
 ```c
@@ -55,8 +55,8 @@ adc_read_voltage(uint8_t channel, uint8_t mode)
 Read the voltage from the ADC  
 **Parameter:** (uint8_t) channel -  1 to 8  
 **Parameter:** (uint8_t) mode - 0 = Single Ended or 1 = Differential  
-When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
-When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+  
+When in differential mode, setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
+When in differential mode, setting channel to 2 will make IN1 = IN- and IN2 = IN+  
 **Returns:** (double) between 0V and the reference voltage  
 ___  
 
@@ -66,7 +66,7 @@ adc_set_refvoltage(double ref)
 
 Set the reference voltage for the ADC  
 **Parameter:** (double) ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi  
-If using the on board voltage reference then the value will be 4.096  
+If using the on-board voltage reference then the value will be 4.096  
 **Returns:** null  
 ___  
 
@@ -97,7 +97,7 @@ dac_set_raw(uint16_t raw, uint8_t channel, uint8_t gain)
 Set the raw value from the selected channel on the DAC  
 **Parameter:** (uint16_t) raw - between 0 and 4095  
 **Parameter:** (uint8_t) channel - 1 or 2  
-**Parameter:** (uint8_t) gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2  
+**Parameter:** (uint8_t) gain - 1 or 2  - The output voltage will be between 0 and 2.048V when the gain is set to 1,  0 and 4.096V when the gain is set to 2  
 **Returns:** null  
 ___  
 
@@ -106,7 +106,7 @@ dac_set_voltage(double voltage, uint8_t channel, uint8_t gain)
 ```
 
 Set the DAC voltage  
-**Parameter:** (double) voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2  
+**Parameter:** (double) voltage - between 0 and 2.048 when the gain is set to 1,  0 and 4.096 when the gain is set to 2  
 **Parameter:** (uint8_t) channel - 1 or 2  
 **Parameter:** (uint8_t) gain - 1 or 2  
 **Returns:** null  
@@ -148,7 +148,7 @@ ___
 io_get_port_direction(uint8_t port)
 ```
 
-Get direction for an IO port  
+Get the direction for an IO port  
 **Parameter:** (uint8_t) port - 0 = pins 1 to 8, port 1 = pins 9 to 16  
 **Returns:** (uint8_t) 0 to 255 (0xFF).  For each bit 1 = input, 0 = output  
 ___  
@@ -166,7 +166,7 @@ ___
 io_get_bus_direction()
 ```
 
-Get direction for the IO bus  
+Get the direction for the IO bus  
 **Returns:** (uint16_t) 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output  
 ___  
 
@@ -385,7 +385,7 @@ io_set_interrupt_defaults(uint8_t port, uint8_t value)
 ```
 
 These bits set the compare value for pins configured for interrupt-on-change on the selected port.  
-If the associated pin level is the opposite from the register bit, an interrupt occurs.  
+If the associated pin level is the opposite of the register bit, an interrupt occurs.  
 **Parameter:** (uint8_t) port - 0 = pins 1 to 8, port 1 = pins 9 to 16  
 **Parameter:** (uint8_t) value - default state for the port. 0 to 255 (0xFF).  
 **Returns:** null  
@@ -396,7 +396,7 @@ io_get_interrupt_defaults(uint8_t port)
 ```
 
 Get the compare value for pins configured for interrupt-on-change on the selected port.  
-If the associated pin level is the opposite from the register bit, an interrupt occurs.  
+If the associated pin level is the opposite of the register bit, an interrupt occurs.  
 **Parameter:** (uint8_t) port - 0 = pins 1 to 8, port 1 = pins 9 to 16  
 **Returns:** (uint8_t) default state for the port. 0 to 255 (0xFF).  
 ___  
@@ -434,7 +434,7 @@ ___
 io_get_interrupt_on_port(uint8_t port)
 ```
 
-Get the interrupt enable status for the selected port  
+Get the interrupt-enable status for the selected port  
 **Parameter:** (uint8_t) port - 0 = pins 1 to 8, port 1 = pins 9 to 16  
 **Returns:** (uint8_t) 0 to 255 (0xFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled  
 ___  
@@ -452,7 +452,7 @@ ___
 io_get_interrupt_on_bus()
 ```
 
-Get the interrupt enable status for the selected bus  
+Get the interrupt-enable status for the selected bus  
 **Returns:** (uint16_t) 0 to 65535 (0xFFFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled  
 ___  
 
@@ -540,7 +540,7 @@ ___
 rtc_write_memory(uint8_t address, uint8_t *valuearray)
 ```
 
-Write to the memory on the DS1307.  The DS1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes  
+Write to the memory on the DS1307.  The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes  
 **Parameter:** (uint8_t) address - 0x08 to 0x3F  
 **Parameter:** (uint8_t) valuearray - byte array containing data to be written to memory  
 **Returns:** null  
@@ -551,7 +551,7 @@ rtc_read_memory(uint8_t address, uint8_t length)
 ```
 
 Read from the memory on the DS1307  
-The DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes  
+The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes  
 **Parameter:** (uint8_t) address - 0x08 to 0x3F  
 **Parameter:** (uint8_t) length - up to 32 bytes.  length can not exceed the available address space.  
 **Returns:** (uint8_t *) pointer to a byte array where the data will be saved  

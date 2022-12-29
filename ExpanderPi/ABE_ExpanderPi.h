@@ -1,7 +1,7 @@
 /*
 ================================================
  AB Electronics UK Expander Pi
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
 ================================================
 
 Required package: libi2c-dev
@@ -41,17 +41,17 @@ double adc_read_voltage(uint8_t channel, uint8_t mode);
 * Read the raw value from the ADC
 * @param channel -  1 to 8
 * @param mode -  0 = Single Ended or 1 = Differential
-* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
-* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
-* @returns 12 bit value between 0 and 4096
+* When in differential mode, setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+* When in differential mode, setting channel to 2 will make IN1 = IN- and IN2 = IN+
+* @returns 12-bit value between 0 and 4096
 */
 uint16_t adc_read_raw(uint8_t channel, uint8_t mode);
 
 
 /**
-* Set the reference voltage for the adc
+* Set the reference voltage for the ADC
 * @param ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi
-* If using the on board voltage reference then the value will be 4.096
+* If using the on-board voltage reference then the value will be 4.096
 */
 void adc_set_refvoltage(double ref);
 
@@ -75,14 +75,14 @@ void dac_close();
 * Set the raw value from the selected channel on the DAC
 * @param raw - between 0 and 4095
 * @param channel - 1 or 2
-* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2
+* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when the gain is set to 1,  0 and 4.096V when the gain is set to 2
 */
 void dac_set_raw(uint16_t raw, uint8_t channel, uint8_t gain);
 
 
 /**
 * Set the DAC voltage
-* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2
+* @param voltage - between 0 and 2.048 when the gain is set to 1,  0 and 4.096 when the gain is set to 2
 * @param channel - 1 or 2
 * @param gain - 1 or 2
 */
@@ -116,7 +116,7 @@ void io_set_port_direction(uint8_t port, uint8_t direction);
 
 
 /**
-* Get direction for an IO port
+* Get the direction for an IO port
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
 */
@@ -131,7 +131,7 @@ void io_set_bus_direction(uint16_t direction);
 
 
 /**
-* Get direction for the IO bus
+* Get the direction for the IO bus
 * @returns 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 */
 uint16_t io_get_bus_direction();
@@ -314,7 +314,7 @@ uint8_t io_get_interrupt_type(uint8_t port);
 
 /**
 * These bits set the compare value for pins configured for interrupt-on-change on the selected port.
-* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+* If the associated pin level is the opposite of the register bit, an interrupt occurs.
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @param value - default state for the port. 0 to 255 (0xFF).
 */
@@ -323,7 +323,7 @@ void io_set_interrupt_defaults(uint8_t port, uint8_t value);
 
 /**
 * Get the compare value for pins configured for interrupt-on-change on the selected port.
-* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+* If the associated pin level is the opposite of the register bit, an interrupt occurs.
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns default state for the port. 0 to 255 (0xFF).
 */
@@ -339,7 +339,7 @@ void io_set_interrupt_on_pin(uint8_t pin, uint8_t value);
 
 
 /**
-* Get the interrupt enable status for the selected pin
+* Get the interrupt-enable status for the selected pin
 * @param pin - 1 to 16
 * @returns 0 = interrupt disabled, 1 = interrupt enabled
 */
@@ -355,7 +355,7 @@ void io_set_interrupt_on_port(uint8_t port, uint8_t value);
 
 
 /**
-* Get the interrupt enable status for the selected port
+* Get the interrupt-enable status for the selected port
 * @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 * @returns 0 to 255 (0xFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
 */
@@ -370,7 +370,7 @@ void io_set_interrupt_on_bus(uint16_t value);
 
 
 /**
-* Get the interrupt enable status for the selected bus
+* Get the interrupt-enable status for the selected bus
 * @returns 0 to 65535 (0xFFFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
 */
 uint16_t io_get_interrupt_on_bus();
@@ -442,7 +442,7 @@ void rtc_set_frequency(uint8_t frequency);
 
 /**
 * Write to the memory on the DS1307.  
-* The DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
+* The DS1307 contains a 56-Byte, battery-backed RAM with Unlimited Writes
 * @param address - 0x08 to 0x3F
 * @param valuearray - byte array containing data to be written to memory
 */
@@ -451,7 +451,7 @@ void rtc_write_memory(uint8_t address, uint8_t *valuearray);
 
 /**
 * Read from the memory on the DS1307
-* The DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
+* The DS1307 contains a 56-byte, battery-backed RAM with Unlimited Writes
 * @param address - 0x08 to 0x3F
 * @param length - up to 32 bytes.  length can not exceed the available address space.
 * @returns - pointer to a byte array where the data will be saved

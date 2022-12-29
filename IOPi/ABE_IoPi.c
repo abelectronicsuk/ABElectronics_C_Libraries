@@ -1,7 +1,7 @@
 /*
  ================================================
  AB Electronics UK IO Pi 32-Channel Port Expander
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
  ================================================
 
  Each MCP23017 chip is split into two 8-bit ports.  port 0 controls
@@ -33,10 +33,10 @@
 	// Input polarity B - If a bit is set, the corresponding GPIO register bit
 	// will reflect the inverted value on the pin.
 #define IPOLB 0x03
-	// The GPINTEN register controls the interrupt-onchange feature for each
+	// The GPINTEN register controls the interrupt-on-change feature for each
 	// pin on port A.
 #define GPINTENA 0x04
-	// The GPINTEN register controls the interrupt-onchange feature for each
+	// The GPINTEN register controls the interrupt-on-change feature for each
 	// pin on port B.
 #define GPINTENB 0x05
 	// Default value for port A - These bits set the compare value for pins
@@ -48,23 +48,21 @@
 	// opposite from the register bit, an interrupt occurs.
 #define DEFVALB 0x07
 	// Interrupt control register for port A.  If 1 interrupt is fired when the
-	// pin matches the default value, if 0 the interrupt is fired on state
-	// change
+	// pin matches the default value, if 0 the interrupt is fired on state change
 #define INTCONA 0x08
 	// Interrupt control register for port B.  If 1 interrupt is fired when the
-	// pin matches the default value, if 0 the interrupt is fired on state
-	// change
+	// pin matches the default value, if 0 the interrupt is fired on state change
 #define INTCONB 0x09
 #define IOCON 0x0A // see datasheet for configuration register
 #define GPPUA 0x0C // pull-up resistors for port A
 #define GPPUB 0x0D // pull-up resistors for port B
 	// The INTF register reflects the interrupt condition on the port A pins of
 	// any pin that is enabled for interrupts. A set bit indicates that the
-	// associated pin caused the interrupt.
+	// associated pin caused the interrupt event.
 #define INTFA 0x0E
 	// The INTF register reflects the interrupt condition on the port B pins of
 	// any pin that is enabled for interrupts. A set bit indicates that the
-	// associated pin caused the interrupt.
+	// associated pin caused the interrupt event.
 #define INTFB 0x0F
 	// The INTCAP register captures the GPIO port A value at the time the
 	// interrupt occurred.
@@ -153,7 +151,7 @@ static uint16_t read_word_data(uint8_t address, uint8_t reg) {
 
 static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	/*
-	 internal method for writing one bytes to the i2c bus
+	 internal method for writing one byte to the i2c bus
 	*/
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
@@ -324,7 +322,7 @@ static uint8_t get_port(uint8_t address, uint8_t port, uint8_t a_register, uint8
 void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction)
 {
 	/**
-	* Set IO direction for an individual pin
+	* Set the IO direction for an individual pin
 	* @param address - I2C address for the target device
 	* @param pins - 1 to 16
 	* @param direction - 1 = input, 0 = output
@@ -335,7 +333,7 @@ void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction)
 uint8_t get_pin_direction(uint8_t address, uint8_t pin)
 {
 	/**
-	* Get IO direction for an individual pin
+	* Get the IO direction for an individual pin
 	* @param address - I2C address for the target device
 	* @param pins - 1 to 16
 	* @returns 1 = input, 0 = output
@@ -346,7 +344,7 @@ uint8_t get_pin_direction(uint8_t address, uint8_t pin)
 void set_port_direction(uint8_t address, uint8_t port, uint8_t direction)
 {
 	/**
-	* Set direction for an IO port
+	* Set the direction for an IO port
 	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @param direction - 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -357,7 +355,7 @@ void set_port_direction(uint8_t address, uint8_t port, uint8_t direction)
 uint8_t get_port_direction(uint8_t address, uint8_t port)
 {
 	/**
-	* get direction for an IO port
+	* Get the direction for an IO port
 	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -368,7 +366,7 @@ uint8_t get_port_direction(uint8_t address, uint8_t port)
 void set_bus_direction(uint8_t address, uint16_t direction)
 {
 	/**
-	* Set direction for the IO bus
+	* Set the direction for the IO bus
 	* @param address - I2C address for the target device
 	* @param direction - 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 	*/
@@ -378,7 +376,7 @@ void set_bus_direction(uint8_t address, uint16_t direction)
 uint16_t get_bus_direction(uint8_t address)
 {
 	/**
-	* Get direction for the IO bus
+	* Get the direction for the IO bus
 	* @param address - I2C address for the target device
 	* @returns 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 	*/
@@ -432,7 +430,7 @@ uint8_t get_port_pullups(uint8_t address, uint8_t port)
 void set_bus_pullups(uint8_t address, uint16_t value)
 {
 	/**
-	* Set internal 100K pull-up resistors for the IO bus
+	* Set the internal 100K pull-up resistors for the IO bus
 	* @param address - I2C address for the target device
 	* @param value - 0 to 65535 (0xFFFF).  For each bit 1 = enabled, 0 = disabled
 	*/
@@ -442,7 +440,7 @@ void set_bus_pullups(uint8_t address, uint16_t value)
 uint16_t get_bus_pullups(uint8_t address)
 {
 	/**
-	* Get internal 100K pull-up resistors for the IO bus
+	* Get the internal 100K pull-up resistors for the IO bus
 	* @param address - I2C address for the target device
 	* @returns 0 to 65535 (0xFFFF).  For each bit 1 = enabled, 0 = disabled
 	*/
@@ -660,7 +658,7 @@ void set_interrupt_defaults(uint8_t address, uint8_t port, uint8_t value)
 {
 	/**
 	* These bits set the compare value for pins configured for interrupt-on-change on the selected port.
-	* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+	* If the associated pin level is the opposite of the register bit, an interrupt occurs.
 	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @param value - default state for the port. 0 to 255 (0xFF).
@@ -672,7 +670,7 @@ uint8_t get_interrupt_defaults(uint8_t address, uint8_t port)
 {
 	/**
   	* Get the compare value for pins configured for interrupt-on-change on the selected port.
-  	* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+  	* If the associated pin level is the opposite of the register bit, an interrupt occurs.
   	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns default state for the port. 0 to 255 (0xFF).
@@ -694,7 +692,7 @@ void set_interrupt_on_pin(uint8_t address, uint8_t pin, uint8_t value)
  uint8_t get_interrupt_on_pin(uint8_t address, uint8_t pin)
  {
 	 /**
-  	* Get the interrupt enable status for the selected pin
+  	* Get the interrupt-enable status for the selected pin
 	* @param address - I2C address for the target device
   	* @param pin - 1 to 16
 	* @returns 0 = interrupt disabled, 1 = interrupt enabled
@@ -716,7 +714,7 @@ void set_interrupt_on_port(uint8_t address, uint8_t port, uint8_t value)
 uint8_t get_interrupt_on_port(uint8_t address, uint8_t port)
 {
 	/**
-  	* Get the interrupt enable status for the selected port
+  	* Get the interrupt-enable status for the selected port
 	* @param address - I2C address for the target device
   	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns 0 to 255 (0xFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
@@ -737,7 +735,7 @@ void set_interrupt_on_bus(uint8_t address, uint16_t value)
  uint16_t get_interrupt_on_bus(uint8_t address)
  {
 	 /**
-  	* Get the interrupt enable status for the selected bus
+  	* Get the interrupt-enable status for the selected bus
 	* @param address - I2C address for the target device
 	* @returns 0 to 65535 (0xFFFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
   	*/

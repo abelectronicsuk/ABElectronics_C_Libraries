@@ -1,7 +1,7 @@
 /*
  ================================================
- AB Electronics UK IO Zero 32 : 32-Channel Port Expander
- See CHANGELOG.md for version number
+ AB Electronics UK IO Zero 32: 32-Channel Port Expander
+ See CHANGELOG.md for the version number
  ================================================
 
  32-Channel Port Expander based on the PCA9535.
@@ -107,7 +107,7 @@ static uint16_t read_word_data(uint8_t address, uint8_t reg) {
 
 static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	/*
-	 internal method for writing one bytes to the i2c bus
+	 internal method for writing one byte to the i2c bus
 	*/
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
 		printf("Failed to open i2c port for write\n");
@@ -278,7 +278,7 @@ static uint8_t get_port(uint8_t address, uint8_t port, uint8_t a_register, uint8
 void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction)
 {
 	/**
-	* Set IO direction for an individual pin
+	* Set the IO direction for an individual pin
 	* @param address - I2C address for the target device
 	* @param pins - 1 to 16
 	* @param direction - 1 = input, 0 = output
@@ -289,7 +289,7 @@ void set_pin_direction(uint8_t address, uint8_t pin, uint8_t direction)
 uint8_t get_pin_direction(uint8_t address, uint8_t pin)
 {
 	/**
-	* Get IO direction for an individual pin
+	* Get the IO direction for an individual pin
 	* @param address - I2C address for the target device
 	* @param pins - 1 to 16
 	* @returns 1 = input, 0 = output
@@ -300,7 +300,7 @@ uint8_t get_pin_direction(uint8_t address, uint8_t pin)
 void set_port_direction(uint8_t address, uint8_t port, uint8_t direction)
 {
 	/**
-	* Set direction for an IO port
+	* Set the direction for an IO port
 	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @param direction - 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -311,7 +311,7 @@ void set_port_direction(uint8_t address, uint8_t port, uint8_t direction)
 uint8_t get_port_direction(uint8_t address, uint8_t port)
 {
 	/**
-	* get direction for an IO port
+	* Get the direction for an IO port
 	* @param address - I2C address for the target device
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
@@ -322,7 +322,7 @@ uint8_t get_port_direction(uint8_t address, uint8_t port)
 void set_bus_direction(uint8_t address, uint16_t direction)
 {
 	/**
-	* Set direction for the IO bus
+	* Set the direction for the IO bus
 	* @param address - I2C address for the target device
 	* @param direction - 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 	*/
@@ -332,7 +332,7 @@ void set_bus_direction(uint8_t address, uint16_t direction)
 uint16_t get_bus_direction(uint8_t address)
 {
 	/**
-	* Get direction for the IO bus
+	* Get the direction for the IO bus
 	* @param address - I2C address for the target device
 	* @returns 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 	*/

@@ -20,7 +20,7 @@
 int main(int argc, char **argv){
 	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	if (dac_open() != 1){ // open the DAC spi channel
+	if (dac_open() != 1){ // open the DAC SPI channel
 		exit(1); // if the SPI bus fails to open exit the program
 	}
 

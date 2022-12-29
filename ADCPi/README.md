@@ -8,7 +8,7 @@ The example C programs can be found in /ABElectronics_C_Libraries/ADCPi/demos
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git

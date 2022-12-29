@@ -23,7 +23,7 @@ int main(int argc, char **argv){
 	io_write_port(0, 0x00); // turn off all of the pins on port 0
 	
 	while (1){
-		io_write_pin(1, 1); // turn pin 1 on and off at 1 second intervals
+		io_write_pin(1, 1); // turn pin 1 on and off at 1-second intervals
 		usleep(1000000);
 		io_write_pin(1, 0);
 		usleep(1000000);

@@ -1,7 +1,7 @@
 /*
  ================================================
  AB Electronics UK ADC Differential Pi 8-Channel Analogue to Digital Converter
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
  ================================================
 
  Reads from the MCP3424 ADC on the ADC Differential Pi and Delta-Sigma Pi.
@@ -165,7 +165,7 @@ static uint8_t set_channel(uint8_t config, uint8_t channel) {
 * @param channel - 1 to 4
 * @param bitrate - 12, 14, 16 or 18
 * @param pga - 1, 2, 4 or 8
-* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @param conversionmode - 0 = one-shot conversion, 1 = continuous conversion
 * @returns - uint32_t value from ADC buffer
 */
 uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode) {
@@ -217,7 +217,7 @@ uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga
 
 	close(i2cbus);
 
-	// extract the returned bytes and combine in the correct order
+	// extract the returned bytes and combine them in the correct order
 	switch (bitrate) {
 	case 18:
 		t = ((h & 3) << 16) | (m << 8) | l;
@@ -260,17 +260,17 @@ uint32_t read_raw(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga
 * @param channel - 1 to 4
 * @param bitrate - 12, 14, 16 or 18
 * @param pga - 1, 2, 4 or 8
-* @param conversionmode - 0 = one shot conversion, 1 = continuous conversion
+* @param conversionmode - 0 = one-shot conversion, 1 = continuous conversion
 * @returns - double voltage value from ADC
 */
 double read_voltage(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t pga, uint8_t conversionmode) {
 	uint32_t raw = read_raw(address, channel, bitrate, pga, conversionmode); // get the raw value
 
-	// calculate the gain based on the pga value
+	// calculate the gain based on the PGA value
 	double gain = (double) pga / 2;
 	double offset = 2.048 / (double) pga;
 
-	// set the lsb value based on the bitrate
+	// set the LSB value based on the bitrate
 	double lsb = 0;
 
 	switch (bitrate) {
@@ -291,7 +291,7 @@ double read_voltage(uint8_t address, uint8_t channel, uint8_t bitrate, uint8_t p
 		break;
 	}
 
-	if (signbit == 1) // if the signbit is 1 convert it back to positive and subtract 2.048.
+	if (signbit == 1) // if the sign bit is 1 convert it back to positive and subtract 2.048.
 	{
 		double voltage = (double) raw * (lsb / gain) - offset; // calculate the voltage and return it
 		return (voltage);

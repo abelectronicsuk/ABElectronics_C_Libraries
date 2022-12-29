@@ -1,14 +1,14 @@
-AB Electronics UK: ADCDAC Pi - C Library
+AB Electronics UK: ADC DAC Pi - C Library
 =====
 
-C Library to use with ADCDAC Pi Raspberry Pi expansion board from [AB Electronics UK](https://www.abelectronics.co.uk)
+C Library to use with ADC DAC Pi Raspberry Pi expansion board from [AB Electronics UK](https://www.abelectronics.co.uk)
 
 The example C programs can be found in /ABElectronics_C_Libraries/ADCDACPi/demos
 
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
@@ -60,8 +60,8 @@ read_adc_raw(uint8_t channel, uint8_t mode)
 Read the raw value from the ADC  
 **Parameter:** (uint8_t) channel - 1 or 2  
 **Parameter:** (uint8_t) mode - 0 = Single Ended or 1 = Differential  
-When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
-When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+  
+When in differential mode, setting the channel to 1 will make IN1 = IN+ and IN2 = IN-  
+When in differential mode, setting the channel to 2 will make IN1 = IN- and IN2 = IN+  
 **Returns:** (uint16_t) between 0 and 4096
 ___  
 
@@ -72,8 +72,8 @@ read_adc_voltage(uint8_t channel, uint8_t mode)
 Read the voltage from the ADC  
 **Parameter:** (uint8_t) channel - 1 or 2  
 **Parameter:** (uint8_t) mode - 0 = Single Ended or 1 = Differential  
-When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-  
-When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+  
+When in differential mode, setting the channel to 1 will make IN1 = IN+ and IN2 = IN-  
+When in differential mode, setting the channel to 2 will make IN1 = IN- and IN2 = IN+  
 **Returns:** (double) between 0 and the reference voltage  
 ___  
 
@@ -115,5 +115,5 @@ set_dac_gain(uint8_t gain)
 
 Set the DAC gain  
 **Parameter:** (uint8_t) gain - 1 or 2  
-The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 3.3V when gain is set to 2.  
+The output voltage will be between 0 and 2.048V when the gain is set to 1,  0 and 3.3V when the gain is set to 2.  
 **Returns:** null  

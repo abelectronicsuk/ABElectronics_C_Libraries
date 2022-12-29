@@ -1,7 +1,7 @@
 /*
 ================================================
  AB Electronics UK Expander Pi
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
 ================================================
 
 Required package: libi2c-dev
@@ -55,15 +55,15 @@ static int dac; // dac object
 #define IODIRB 0x01 // IO direction B - 1= input 0 = output
 #define IPOLA 0x02 // Input polarity A 
 #define IPOLB 0x03 // Input polarity B
-#define GPINTENA 0x04 // The GPINTEN register controls the interrupt-onchange feature for each pin on port A.
-#define GPINTENB 0x05 // The GPINTEN register controls the interrupt-onchange feature for each pin on port B.
+#define GPINTENA 0x04 // The GPINTEN register controls the interrupt-on-change feature for each pin on port A.
+#define GPINTENB 0x05 // The GPINTEN register controls the interrupt-on-change feature for each pin on port B.
 #define DEFVALA 0x06 // Default value for port A
 #define DEFVALB 0x07 // Default value for port B
 #define INTCONA 0x08 // Interrupt control register for port A
 #define INTCONB 0x09 // Interrupt control register for port B
 #define IOCON 0x0A // see datasheet for configuration register
-#define GPPUA 0x0C // pull-up resistors for port A
-#define GPPUB 0x0D // pull-up resistors for port B
+#define GPPUA 0x0C // pullup resistors for port A
+#define GPPUB 0x0D // pullup resistors for port B
 #define INTFA 0x0E // The INTF register reflects the interrupt condition of any pin that is enabled for interrupts.
 #define INTFB 0x0F
 #define INTCAPA 0x10 // The INTCAP register captures the GPIO port value at the time the interrupt occurred.
@@ -100,20 +100,20 @@ uint16_t rtcCentury = 2000;
 static uint8_t read_byte_data(uint8_t address, uint8_t reg) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for read %s \n", strerror(errno));
+		printf("Failed to open I2C port for read %s \n", strerror(errno));
 
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for read\n");
+		printf("Failed to write to I2C port for read\n");
 		exit(1);
 	}
 
 	buf[0] = reg;
 
 	if ((write(i2cbus, buf, 1)) != 1) {
-		printf("Failed to write to i2c device for read\n");
+		printf("Failed to write to I2C device for read\n");
 		exit(1);
 	}
 
@@ -130,20 +130,20 @@ static uint8_t read_byte_data(uint8_t address, uint8_t reg) {
 static uint16_t read_word_data(uint8_t address, uint8_t reg) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for read %s \n", strerror(errno));
+		printf("Failed to open I2C port for read %s \n", strerror(errno));
 
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for read\n");
+		printf("Failed to write to I2C port for read\n");
 		exit(1);
 	}
 
 	buf[0] = reg;
 
 	if ((write(i2cbus, buf, 1)) != 1) {
-		printf("Failed to write to i2c device for read\n");
+		printf("Failed to write to I2C device for read\n");
 		exit(1);
 	}
 
@@ -161,20 +161,20 @@ static uint16_t read_word_data(uint8_t address, uint8_t reg) {
 static void read_byte_array(uint8_t address, uint8_t reg, uint8_t length) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for read %s \n", strerror(errno));
+		printf("Failed to open I2C port for read %s \n", strerror(errno));
 
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for read\n");
+		printf("Failed to write to I2C port for read\n");
 		exit(1);
 	}
 
 	writebuffer[0] = reg;
 
 	if ((write(i2cbus, writebuffer, 1)) != 1) {
-		printf("Failed to write to i2c device for read\n");
+		printf("Failed to write to I2C device for read\n");
 		exit(1);
 	}
 
@@ -185,12 +185,12 @@ static void read_byte_array(uint8_t address, uint8_t reg, uint8_t length) {
 
 static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for write\n");
+		printf("Failed to open I2C port for write\n");
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for write\n");
+		printf("Failed to write to I2C port for write\n");
 		exit(1);
 	}
 
@@ -198,7 +198,7 @@ static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 	buf[1] = value;
 
 	if ((write(i2cbus, buf, 2)) != 2) {
-		printf("Failed to write to i2c device for write\n");
+		printf("Failed to write to I2C device for write\n");
 		exit(1);
 	}
 
@@ -207,12 +207,12 @@ static void write_byte_data(uint8_t address, uint8_t reg, uint8_t value) {
 
 static void write_word_data(uint8_t address, uint8_t reg, uint16_t value) {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for write\n");
+		printf("Failed to open I2C port for write\n");
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for write\n");
+		printf("Failed to write to I2C port for write\n");
 		exit(1);
 	}
 
@@ -221,7 +221,7 @@ static void write_word_data(uint8_t address, uint8_t reg, uint16_t value) {
 	buf[2] = (uint8_t)(value>>8) & 0xff; // upper 8 bits
 
 	if ((write(i2cbus, buf, 3)) != 3) {
-		printf("Failed to write to i2c device for write\n");
+		printf("Failed to write to I2C device for write\n");
 		exit(1);
 	}
 
@@ -231,17 +231,17 @@ static void write_word_data(uint8_t address, uint8_t reg, uint16_t value) {
 void write_byte_array(uint8_t address, uint8_t buffer[], uint8_t length) {
 	/*	internal function for writing data to the i2c bus	*/
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for write\n");
+		printf("Failed to open I2C port for write\n");
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for write\n");
+		printf("Failed to write to I2C port for write\n");
 		exit(1);
 	}
 
 	if ((write(i2cbus, buffer, length)) != length) {
-		printf("Failed to write to i2c device for write\n");
+		printf("Failed to write to I2C device for write\n");
 		exit(1);
 	}
 
@@ -249,12 +249,12 @@ void write_byte_array(uint8_t address, uint8_t buffer[], uint8_t length) {
 }
 
 static unsigned char bcd_to_dec(unsigned char bcd) {
-	// internal rtc function for converting a bcd formatted number to decimal
+	// internal RTC function for converting a BCD formatted number to decimal
 	return (unsigned char)((HI_NIBBLE(bcd) * 10) + (LO_NIBBLE(bcd)));
 }
 
 static unsigned char dec_to_bcd(char dec) {
-	// internal rtc function for converting a decimal formatted number to bcd
+	// internal RTC function for converting a decimal formatted number to BCD
 	return (unsigned char)((dec / 10) * 16) + (dec % 10);
 }
 
@@ -283,7 +283,7 @@ static char checkbit(char byte, char bit) {
 static void set_pin(uint8_t pin, uint8_t value, uint8_t a_register, uint8_t b_register)
 {
 	/**
-	* internal io function for setting the value of a single bit within the device registers
+	* internal IO function for setting the value of a single bit within the device registers
 	*/
 	uint8_t reg = 0;
 	uint8_t p = 0;
@@ -314,7 +314,7 @@ static void set_pin(uint8_t pin, uint8_t value, uint8_t a_register, uint8_t b_re
 static uint8_t get_pin(uint8_t pin, uint8_t a_register, uint8_t b_register)
 {
 	/**
-	* internal io function for getting the value of a single bit within the device registers
+	* internal IO function for getting the value of a single bit within the device registers
 	*/
 
 		uint8_t value = 0;
@@ -338,7 +338,7 @@ static uint8_t get_pin(uint8_t pin, uint8_t a_register, uint8_t b_register)
 static void set_port(uint8_t port, uint8_t value, uint8_t a_register, uint8_t b_register)
 {
 	/**
-	* internal io function for setting the value of a device register
+	* internal IO function for setting the value of a device register
 	*/
 	if (port == 0)
 	{
@@ -357,7 +357,7 @@ static void set_port(uint8_t port, uint8_t value, uint8_t a_register, uint8_t b_
 static uint8_t get_port(uint8_t port, uint8_t a_register, uint8_t b_register)
 {
 	/**
-	* internal io function for getting the value of a device register
+	* internal IO function for getting the value of a device register
 	*/
 	if (port == 0)
 	{
@@ -411,8 +411,8 @@ uint16_t adc_read_raw(uint8_t channel, uint8_t mode) {
 	* Read the raw value from the ADC
 	* @param channel -  1 to 8
 	* @param mode -  0 = Single Ended or 1 = Differential
-	* When in differential mode setting channel to 1 will make IN1 = IN+ and IN2 = IN-
-	* When in differential mode setting channel to 2 will make IN1 = IN- and IN2 = IN+
+	* When in differential mode, setting channel to 1 will make IN1 = IN+ and IN2 = IN-
+	* When in differential mode, setting channel to 2 will make IN1 = IN- and IN2 = IN+
 	* @returns 12 bit value between 0 and 4096
 	*/
 
@@ -453,7 +453,7 @@ void adc_set_refvoltage(double ref) {
 	/**
 	* Set the reference voltage for the ADC
 	* @param ref - Set this value to be the same as the voltage measured on the Vref pin on the Expander Pi
-	* If using the on board voltage reference then the value will be 4.096
+	* If using the on-board voltage reference then the value will be 4.096
 	*/
 	adcrefvoltage = ref;
 }
@@ -493,7 +493,7 @@ void dac_set_raw(uint16_t raw, uint8_t channel, uint8_t gain) {
 	* Set the raw value from the selected channel on the DAC
 	* @param raw - between 0 and 4095
 	* @param channel - 1 or 2
-	* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when gain is set to 1,  0 and 4.096V when gain is set to 2
+	* @param gain - 1 or 2  - The output voltage will be between 0 and 2.048V when the gain is set to 1,  0 and 4.096V when the gain is set to 2
 	*/
 
 	uint16_t tx;
@@ -529,7 +529,7 @@ void dac_set_raw(uint16_t raw, uint8_t channel, uint8_t gain) {
 void dac_set_voltage(double voltage, uint8_t channel, uint8_t gain) {
 	/**
 	* Set the DAC voltage
-	* @param voltage - between 0 and 2.048 when gain is set to 1,  0 and 4.096 when gain is set to 2
+	* @param voltage - between 0 and 2.048 when the gain is set to 1,  0 and 4.096 when the gain is set to 2
 	* @param channel - 1 or 2
 	* @param gain - 1 or 2
 	*/
@@ -591,7 +591,7 @@ void io_set_port_direction(uint8_t port, uint8_t direction)
 uint8_t io_get_port_direction(uint8_t port)
 {
 	/**
-	* Get direction for an IO port
+	* Get the direction for an IO port
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns 0 to 255 (0xFF).  For each bit 1 = input, 0 = output
 	*/
@@ -610,7 +610,7 @@ void io_set_bus_direction(uint16_t direction)
 uint16_t io_get_bus_direction()
 {
 	/**
-	* Get direction for the IO bus
+	* Get the direction for the IO bus
 	* @returns 0 to 65535 (0xFFFF).  For each bit 1 = input, 0 = output
 	*/
 	return read_word_data(IOADDRESS, IODIRA);
@@ -869,7 +869,7 @@ void io_set_interrupt_defaults(uint8_t port, uint8_t value)
 {
 	/**
 	* These bits set the compare value for pins configured for interrupt-on-change on the selected port.
-	* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+	* If the associated pin level is the opposite of the register bit, an interrupt occurs.
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @param value - default state for the port. 0 to 255 (0xFF).
 	*/
@@ -880,7 +880,7 @@ uint8_t io_get_interrupt_defaults(uint8_t port)
 {
 	/**
   	* Get the compare value for pins configured for interrupt-on-change on the selected port.
-  	* If the associated pin level is the opposite from the register bit, an interrupt occurs.
+  	* If the associated pin level is the opposite of the register bit, an interrupt occurs.
 	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns default state for the port. 0 to 255 (0xFF).
   	*/
@@ -900,7 +900,7 @@ void io_set_interrupt_on_pin(uint8_t pin, uint8_t value)
  uint8_t io_get_interrupt_on_pin(uint8_t pin)
  {
 	 /**
-  	* Get the interrupt enable status for the selected pin
+  	* Get the interrupt-enable status for the selected pin
   	* @param pin - 1 to 16
 	* @returns 0 = interrupt disabled, 1 = interrupt enabled
   	*/
@@ -920,7 +920,7 @@ void io_set_interrupt_on_port(uint8_t port, uint8_t value)
 uint8_t io_get_interrupt_on_port(uint8_t port)
 {
 	/**
-  	* Get the interrupt enable status for the selected port
+  	* Get the interrupt-enable status for the selected port
   	* @param port - 0 = pins 1 to 8, port 1 = pins 9 to 16
 	* @returns 0 to 255 (0xFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
   	*/
@@ -939,7 +939,7 @@ void io_set_interrupt_on_bus(uint16_t value)
 uint16_t io_get_interrupt_on_bus()
  {
 	 /**
-  	* Get the interrupt enable status for the selected bus
+  	* Get the interrupt-enable status for the selected bus
 	* @returns 0 to 65535 (0xFFFF). For each bit 0 = interrupt disabled, 1 = interrupt enabled
   	*/
   	return read_word_data(IOADDRESS, GPINTENA);
@@ -1080,7 +1080,7 @@ void rtc_set_frequency(uint8_t frequency) {
 
 void rtc_write_memory(uint8_t address, uint8_t *valuearray) {
 	/**
-	* write to the memory on the ds1307.  The ds1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes
+	* write to the memory on the DS1307.  The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes
 	* @param address - 0x08 to 0x3F
 	* @param valuearray - byte array containing data to be written to memory
 	*/
@@ -1122,8 +1122,8 @@ void rtc_write_memory(uint8_t address, uint8_t *valuearray) {
 
 uint8_t *rtc_read_memory(uint8_t address, uint8_t length) {
 	/**
-	* Read from the memory on the ds1307
-	* the DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
+	* Read from the memory on the DS1307
+	* The DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
 	* @param address - 0x08 to 0x3F
 	* @param length - up to 32 bytes.  length can not exceed the available address space.
 	* @returns - pointer to a byte array where the data will be saved

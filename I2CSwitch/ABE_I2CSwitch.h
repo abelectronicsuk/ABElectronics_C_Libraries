@@ -1,7 +1,7 @@
 /*
  ================================================
- ABElectronics UK I2C Switch
- See CHANGELOG.md for version number
+ AB Electronics UK I2C Switch
+ See CHANGELOG.md for the version number
  ================================================
 
 

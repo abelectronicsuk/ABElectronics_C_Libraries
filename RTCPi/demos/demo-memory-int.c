@@ -6,7 +6,7 @@
 *      compile with "gcc ../ABE_RTCPi.c demo-memory-int.c -o demo-memory-int"
 *      run with "./demo-memory-int"
 *
-*  This demo shows how to write to and read from the internal battery backed memory on the DS1307 RTC chip
+*  This demo shows how to write to and read from the internal battery-backed memory on the DS1307 RTC chip
 */
 
 #include <stdio.h>
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 	
 	int outval = 0; // declare the output value
 
-	// read the RTC SRAM into a 4 byte array.  
+	// read the RTC SRAM into a 4-byte array.  
 	// The array is allocated by the rtc_read_memory function, use a pointer to point to the memory location of this array.
 	uint8_t *readarray = rtc_read_memory(0x08, sizeof(inval));
 

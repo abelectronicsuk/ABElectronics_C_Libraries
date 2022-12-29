@@ -1,12 +1,11 @@
 /*
  ================================================
- ABElectronics UK I2C Switch
- See CHANGELOG.md for version number
+ AB Electronics UK I2C Switch
+ See CHANGELOG.md for the version number
  ================================================
 
 
- The PCA9546A I2C switch contains 4 channels.  Each channel can be
- switched on or off independently.
+ The PCA9546A I2C switch contains 4 channels.  Each channel can be switched on or off independently.
 
  Required package: libi2c-dev
  sudo apt-get install libi2c-dev
@@ -43,12 +42,12 @@ static uint8_t buf[10] = { 0 };
 static uint8_t read_byte_data(uint8_t address) {
 
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for read %s \n", strerror(errno));
+		printf("Failed to open I2C port for read %s \n", strerror(errno));
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for read\n");
+		printf("Failed to write to I2C port for read\n");
 		exit(1);
 	}
 
@@ -64,19 +63,19 @@ static uint8_t read_byte_data(uint8_t address) {
 
 static void write_byte_data(uint8_t address, uint8_t value) {
 	if ((i2cbus = open(fileName, O_RDWR)) < 0) {
-		printf("Failed to open i2c port for write\n");
+		printf("Failed to open I2C port for write\n");
 		exit(1);
 	}
 
 	if (ioctl(i2cbus, I2C_SLAVE, address) < 0) {
-		printf("Failed to write to i2c port for write\n");
+		printf("Failed to write to I2C port for write\n");
 		exit(1);
 	}
 
 	buf[0] = value;
 
 	if ((write(i2cbus, buf, 1)) != 1) {
-		printf("Failed to write to i2c device for write\n");
+		printf("Failed to write to I2C device for write\n");
 		exit(1);
 	}
 
@@ -261,14 +260,14 @@ char reset(){
 	}
 	
 	// wait 1ms before setting reset pin high
-	usleep (1000);  
+	usleep(1000);  
 
 	if (-1 == gpio_write(RESETPIN, 1)) {
 		failed = 1;	
 	}
 
 	// wait 1ms for the switch to reset
-	usleep (1000);  
+	usleep(1000);  
 
 	if (failed == 1){
 		fprintf(stderr, "Failed to reset switch. GPIO error!\n");

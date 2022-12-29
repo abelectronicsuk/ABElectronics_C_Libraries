@@ -8,7 +8,7 @@ The example C programs can be found in /ABElectronics_C_Libraries/IOPi/demos
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
@@ -328,7 +328,7 @@ set_interrupt_defaults(uint8_t address, uint8_t port, uint8_t value)
 ```
 
 These bits set the compare value for pins configured for interrupt-on-change on the selected port.  
-If the associated pin level is the opposite from the register bit, an interrupt occurs.  
+If the associated pin level is the opposite of the register bit, an interrupt occurs.  
 **Parameter:** (uint8_t) address: I2C address for the target device  
 **Parameter:** (uint8_t) port: 0 = pins 1 to 8, 1 = pins 9 to 16  
 **Parameter:** (uint8_t) value: compare value between 0 and 255 or 0x00 and 0xFF.  Each bit in the 8-bit number represents a pin on the port.  

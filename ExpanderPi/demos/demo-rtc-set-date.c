@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 			puts("strftime failed");
 		}
 
-		usleep(1000000); // sleep for a second
+		usleep(1000000); // sleep for 1 second
 	}
 
 	(void)argc;

@@ -8,7 +8,7 @@ The example C programs can be found in /ABElectronics_C_Libraries/RTCPi/demos
 Downloading and Installing the library
 ----------
 
-To download to your Raspberry Pi type in terminal:  
+To download to your Raspberry Pi type in the terminal:  
 
 ```bash
 git clone https://github.com/abelectronicsuk/ABElectronics_C_Libraries.git
@@ -66,7 +66,7 @@ rtc_write_memory(uint8_t address, uint8_t valuearray[])
 ```
 
 Write to the memory on the ds1307.  
-The DS1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes.  
+The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes.  
 **Parameter:** (uint8_t) address - 0x08 to 0x3F  
 **Parameter:** (uint8_t[]) valuearray - byte array containing data to be written to memory  
 **Returns:** null  
@@ -77,7 +77,7 @@ rtc_read_memory(uint8_t address, uint8_t length)
 ```
 
 Read from the memory on the ds1307  
-The DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes  
+The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes.  
 **Parameter:** (uint8_t) address - 0x08 to 0x3F  
 **Parameter:** (uint8_t) length - up to 32 bytes.  length can not exceed the available address space.  
 **Returns:** (uint8_t *) pointer to a byte array where the data will be saved  

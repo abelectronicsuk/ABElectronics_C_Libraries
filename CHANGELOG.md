@@ -3,8 +3,11 @@
 
 ## 2022-04-23 Andrew Dorey  
 
-* 1.3.1 Added library for the new IO Zero 32 expansion board.
+* 1.3.2 Updated spelling and grammar in the Readme files and code comments.
 
+## 2022-04-23 Andrew Dorey  
+
+* 1.3.1 Added library for the new IO Zero 32 expansion board.
 
 ## 2021-02-25 Andrew Dorey  
 

@@ -1,7 +1,7 @@
 /*
  ================================================
- ABElectronics UK Servo Pi 16-Channel PWM Servo Controller
- See CHANGELOG.md for version number
+ AB Electronics UK Servo Pi 16-Channel PWM Servo Controller
+ See CHANGELOG.md for the version number
  ================================================
 
 
@@ -29,28 +29,28 @@ void set_pwm_freq(double freq, uint8_t address);
 /**
 * Set the output on single channels
 * @param channel - 1 to 16
-* @param on - time period 0 to 4096
-* @param off - time period 0 to 4096
+* @param on - period 0 to 4096
+* @param off - period 0 to 4096
 * @param address - I2C address
 */
 void set_pwm(uint8_t channel, uint16_t on, uint16_t off, uint8_t address);
 
 /**
 * Set the output on all channels
-* @param on - time period 0 to 4096
-* @param off - time period 0 to 4096
+* @param on - period 0 to 4096
+* @param off - period 0 to 4096
 * @param address - I2C address
 */
 void set_all_pwm(uint16_t on, uint16_t off, uint8_t address);
 
 /**
-* Disable the output via OE pin
+* Disable the output via the OE pin
 * @returns - 0 = OK, 1 = GPIO failed
 */
 int output_disable();
 
 /**
-* Enable the output via OE pin
+* Enable the output via the OE pin
 * @returns - 0 = OK, 1 = GPIO failed
 */
 int output_enable();

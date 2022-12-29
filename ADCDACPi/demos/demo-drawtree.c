@@ -32,11 +32,11 @@ int arraysize;
 int main(int argc, char **argv){
 	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	if (open_dac() != 1){ // open the DAC spi channel
+	if (open_dac() != 1){ // open the DAC SPI channel
 		exit(1); // if the SPI bus fails to open exit the program
 	}
 
-	set_dac_gain(1); // set the dac gain to 1 which will give a voltage range of 0 to 2.048V
+	set_dac_gain(1); // set the DAC gain to 1 which will give a voltage range of 0 to 2.048V
 
 	arraysize = sizeof(xpoints) / sizeof(unsigned int);;
 

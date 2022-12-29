@@ -1,7 +1,7 @@
 /*
 ================================================
  AB Electronics UK RTC Pi real-time clock
- See CHANGELOG.md for version number
+ See CHANGELOG.md for the version number
 ================================================
 
 Required package:libi2c-dev
@@ -42,8 +42,8 @@ void rtc_set_frequency(uint8_t frequency);
 
 
 /**
-* write to the memory on the DS1307
-* the DS1307 contains 56 - Byte, battery - backed RAM with Unlimited Writes
+* Write to the memory on the DS1307
+* The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes
 * @param address - 0x08 to 0x3F
 * @param valuearray - byte array containing data to be written to memory
 */
@@ -51,7 +51,7 @@ void rtc_write_memory(uint8_t address, uint8_t valuearray[]);
 
 /**
 * Read from the memory on the DS1307
-* the DS1307 contains 56-Byte, battery-backed RAM with Unlimited Writes
+* The DS1307 contains a 56-byte, battery-backed RAM with unlimited writes
 * @param address - 0x08 to 0x3F
 * @param length - up to 32 bytes.  length can not exceed the available address space.
 * @returns - pointer to a byte array where the data will be saved

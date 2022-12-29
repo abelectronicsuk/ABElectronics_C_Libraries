@@ -7,13 +7,13 @@
  *  access several Servo Pi boards at the same time from a single I2C address.
  *
  *	The demo needs to be run as sudo.  This is because the Servo Pi uses the GPIO port to control
- *	the Output Enable function and GPIO needs to be accessed as root.
+ *	the Output Enable function and the GPIO needs to be accessed as root.
  *
  *	To run without sudo privileges change "servopi_init(0x40, 1);" to "servopi_init(0x40, 0);"
  *	to disable the output enable pin and remove "output_enable(0x40);"
  *
- *      compile with "gcc -lm ../ABE_ServoPi.c demo-setallcalladdress.c -o demo-setallcalladdress"
- *      run with "sudo ./demo-setallcalladdress"
+ *  Compile with "gcc -lm ../ABE_ServoPi.c demo-setallcalladdress.c -o demo-setallcalladdress"
+ *  Run with "sudo ./demo-setallcalladdress"
  */
 
 #include <stdio.h>
@@ -28,11 +28,12 @@ void clearscreen() {
 
 
 int main(int argc, char **argv) {
-	setvbuf(stdout, NULL, _IONBF, 0); // needed to print to the command line
+	setvbuf(stdout, NULL, _IONBF, 0); // Needed to print to the command line
 
 	int a;
 
-	// initialise the servo pi on I2C address 0x40.  Check the returned value to ensure the Servo Pi initialised correctly
+	// Initialise the servo pi on I2C address 0x40.  
+	// Check the returned value to ensure the Servo Pi is initialised correctly
 
 	a = servopi_init(0x40, 1);
 	if (a != 0){

@@ -26,7 +26,7 @@ void clearscreen ()
 int main(int argc, char **argv){
 	setvbuf (stdout, NULL, _IONBF, 0); // needed to print to the command line
 
-	if (adc_open() != 1){ // open the ADC spi channel
+	if (adc_open() != 1){ // open the ADC SPI channel
 			exit(1); // if the SPI bus fails to open exit the program
 		}
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv){
 	int x;
 
 	for (x = 0; x < numberofsamples; x++){
-		samplearray[x] = adc_read_voltage(1, 0); // read from adc channel 1 in single ended mode
+		samplearray[x] = adc_read_voltage(1, 0); // read from adc channel 1 in single-ended mode
 
 	}
 
