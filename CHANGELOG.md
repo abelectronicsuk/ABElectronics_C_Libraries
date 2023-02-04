@@ -1,6 +1,10 @@
 
 # AB Electronics UK: C Libraries - Change Log
 
+## 2023-02-04 Andrew Dorey  
+
+* 1.3.3 Updates to IO Pi and Expander Pi documentation.
+
 ## 2022-04-23 Andrew Dorey  
 
 * 1.3.2 Updated spelling and grammar in the Readme files and code comments.
