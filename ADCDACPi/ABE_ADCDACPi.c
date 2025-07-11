@@ -164,8 +164,8 @@ void set_dac_raw(uint16_t raw, uint8_t channel) {
 		dactx[0] = (x &= ~(1 << 5));
     }
 
-	struct spi_ioc_transfer tr = { .tx_buf = (uint32_t) &dactx, .rx_buf =
-			(uint32_t) NULL, .len = 2, .delay_usecs = 0, .speed_hz = dacspeed,
+	struct spi_ioc_transfer tr = { .tx_buf = (uintptr_t) dactx, .rx_buf =
+			(uintptr_t) NULL, .len = 2, .delay_usecs = 0, .speed_hz = dacspeed,
 			.bits_per_word = 8, .cs_change = 0, };
 
 	// Write data
